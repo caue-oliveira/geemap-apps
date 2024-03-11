@@ -34,5 +34,5 @@ markdown = """
 st.markdown(markdown)
 
 m = geemap.Map()
-m.add_basemap("OpenTopoMap")
+m.add_basemap("HYBRID")
 m.to_streamlit(height=500)
