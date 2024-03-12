@@ -4,14 +4,15 @@ import streamlit as st
 import geemap.foliumap as geemap
 import json
 
-# Ler as informações do arquivo JSON
-with open('D:/Documents/GitHub/geemap-apps/.streamlit/secrets.json', 'r') as f:
-    secrets = json.load(f)
+# Credentials
+json_data = st.secrets["json_data"]
+service_account = st.secrets["service_account"]
 
-service_account = secrets['client_email']
-private_key = secrets['private_key']
+json_object = json.loads(json_data, strict=False)
+json_object = json.dumps(json_object)
 
-credentials = ee.ServiceAccountCredentials(service_account, None, private_key)
+# Authorising the app
+credentials = ee.ServiceAccountCredentials(service_account, key_data=json_object)
 ee.Initialize(credentials)
 
 # Configs página
