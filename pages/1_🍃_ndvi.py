@@ -7,6 +7,7 @@ import geemap.foliumap as geemap
     #Título
 st.title("NDVI")
 
+
     # Colunas
 col1, col2 = st.columns([4, 1])
 options = list(geemap.basemaps.keys())
