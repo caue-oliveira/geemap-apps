@@ -3,6 +3,9 @@ import ee
 import streamlit as st
 import geemap.foliumap as geemap
 
+# Auth
+ee.Initialize()
+
 # Configs página
     #Título
 st.title("NDVI")
