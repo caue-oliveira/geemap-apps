@@ -2,4 +2,3 @@ geemap
 streamlit
 fiona
 geopandas
-pygeo
