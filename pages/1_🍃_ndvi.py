@@ -7,6 +7,7 @@ import json
 # Credentials
 json_data = st.secrets["json_data"]
 service_account = st.secrets["service_account"]
+EE_TOKEN = st.secrets['EARTHENGINE_TOKEN']
 
 json_object = json.loads(json_data, strict=False)
 json_object = json.dumps(json_object)
@@ -14,6 +15,7 @@ json_object = json.dumps(json_object)
 # Authorising the app
 credentials = ee.ServiceAccountCredentials(service_account, key_data=json_object)
 ee.Initialize(credentials)
+geemap.ee_initialize(EE_TOKEN)
 
 # Configs página
     #Título
