@@ -156,55 +156,6 @@ def app():
             index=0,
         )
 
-        add_outline = st.checkbox(
-            "Overlay an administrative boundary on timelapse", False
-        )
-
-        if add_outline:
-
-            with st.expander("Customize administrative boundary", True):
-
-                overlay_options = {
-                    "User-defined": None,
-                    "Continents": "continents",
-                    "Countries": "countries",
-                    "US States": "us_states",
-                    "China": "china",
-                }
-
-                overlay = st.selectbox(
-                    "Select an administrative boundary:",
-                    list(overlay_options.keys()),
-                    index=2,
-                )
-
-                overlay_data = overlay_options[overlay]
-
-                if overlay_data is None:
-                    overlay_data = st.text_input(
-                        "Enter an HTTP URL to a GeoJSON file or an ee.FeatureCollection asset id:",
-                        "https://raw.githubusercontent.com/giswqs/geemap/master/examples/data/countries.geojson",
-                    )
-
-                overlay_color = st.color_picker(
-                    "Select a color for the administrative boundary:", "#000000"
-                )
-                overlay_width = st.slider(
-                    "Select a line width for the administrative boundary:", 1, 20, 1
-                )
-                overlay_opacity = st.slider(
-                    "Select an opacity for the administrative boundary:",
-                    0.0,
-                    1.0,
-                    1.0,
-                    0.05,
-                )
-        else:
-            overlay_data = None
-            overlay_color = "black"
-            overlay_width = 1
-            overlay_opacity = 1
-
     with row1_col1:
 
         with st.expander(
@@ -367,10 +318,6 @@ def app():
                                     frames_per_second=speed,
                                     # dimensions=dimensions,
                                     dimensions=768,
-                                    overlay_data=overlay_data,
-                                    overlay_color=overlay_color,
-                                    overlay_width=overlay_width,
-                                    overlay_opacity=overlay_opacity,
                                     frequency=frequency,
                                     date_format=None,
                                     title=title,
@@ -401,10 +348,6 @@ def app():
                                     frames_per_second=speed,
                                     dimensions=768,
                                     # dimensions=dimensions,
-                                    overlay_data=overlay_data,
-                                    overlay_color=overlay_color,
-                                    overlay_width=overlay_width,
-                                    overlay_opacity=overlay_opacity,
                                     frequency=frequency,
                                     date_format=None,
                                     title=title,
