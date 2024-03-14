@@ -55,7 +55,6 @@ def uploaded_file_to_gdf(data):
 
     return gdf
 
-
 def app():
 
     today = date.today()
@@ -210,12 +209,10 @@ def app():
             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
                 sensor_start_year = 1984
                 timelapse_title = "Landsat Index"
-                timelapse_speed = 5
+
             elif collection == "Sentinel-2 MSI Surface Reflectance":
                 sensor_start_year = 2015
                 timelapse_title = "Sentinel-2 Timelapse"
-                timelapse_speed = 5
-            video_empty.video("https://youtu.be/VVRK_-dEjR4")
 
             with st.form("submit_landsat_form"):
 
@@ -225,7 +222,7 @@ def app():
                 out_gif = geemap.temp_file_path(".gif")
 
                 title = st.text_input(
-                    "Enter a title to show on the timelapse: ", timelapse_title
+                    "Enter a title to show on your image: ", timelapse_title
                 )
                 index_function = st.selectbox(
                     "Select an index function:",
@@ -255,7 +252,7 @@ def app():
                 with st.expander("Customize timelapse"):
 
                     cloud_pixel_percentage = st.slider(
-                        "Cloud %",
+                        "Cloud Coverage 🌥️:",
                         min_value=5,
                         max_value=100,
                         step=5,
@@ -289,6 +286,17 @@ def app():
                     )
                     mp4 = st.checkbox("Save timelapse as MP4", True)
 
+#### IMAGE PROCESSING INDEX
+                def getNDVI(collection):
+                    if collection == 'Landsat TM-ETM-OLI Surface Reflectance':
+                        ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
+                        return ndvi
+                    elif collection == 'Sentinel-2 MSI Surface Reflectance':
+                        return img_collection.normalizedDifference(['B8', 'B4'])
+
+
+ #### IMAGE PROCESSING END
+
                 empty_text = st.empty()
                 empty_image = st.empty()
                 empty_fire_image = st.empty()
@@ -312,34 +320,20 @@ def app():
 
                         try:
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
-                                out_gif = geemap.landsat_timelapse(
-                                    roi=roi,
-                                    out_gif=out_gif,
-                                    start_year=start_year,
-                                    end_year=end_year,
-                                    start_date=start_date,
-                                    end_date=end_date,
-                                    bands=bands,
-                                    apply_fmask=apply_fmask,
-                                    cloud=cloud_pixel_percentage,
-                                    # dimensions=dimensions,
-                                    dimensions=768,
-                                    frequency=frequency,
-                                    date_format=None,
-                                    title=title,
-                                    title_xy=("2%", "90%"),
-                                    add_text=True,
-                                    text_xy=("2%", "2%"),
-                                    text_sequence=None,
-                                    font_type=font_type,
-                                    font_size=font_size,
-                                    font_color=font_color,
-                                    add_progress_bar=True,
-                                    progress_bar_color=progress_bar_color,
-                                    progress_bar_height=5,
-                                    loop=0,
-                                    mp4=mp4,
-                                    fading=fading,
+                                img_collection = (
+                                    ee.ImageCollection("LANDSAT/LC09/C02/T2_L2")
+                                    .filterBounds(sample_roi)
+                                    .filterDate(start_date, end_date)
+                                    .sort(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', cloud_pixel_percentage))
+                                    .first()
+                                )
+                                clip_sr_img = (
+                                    img_collection.clip(sample_roi).multiply(0.0000275).add(-0.2)
+                                )
+                                getNDVI(clip_sr_img)
+                                m.add_layer(ndvi,
+                                            {'min': -0.2, 'max': 1,
+                                             'palette': ['B62F02', 'D87B32','FCF40D','62C41C','0A5C1C']},'NDVI'
                                 )
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
                                 out_gif = geemap.sentinel2_timelapse(
