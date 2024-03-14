@@ -109,7 +109,8 @@ def app():
             "Select a satellite image collection: ",
             [
                 "Landsat TM-ETM-OLI Surface Reflectance",
-                "Sentinel-2 MSI Surface Reflectance"
+                "Sentinel-2 MSI Surface Reflectance",
+                "Any Earth Engine ImageCollection"
             ],
             index=1,
         )
