@@ -258,7 +258,7 @@ def app():
 
             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
                 sensor_start_year = 1984
-                timelapse_title = "Landsat Index"
+                timelapse_title = "Landsat Timelapse"
                 timelapse_speed = 5
             elif collection == "Sentinel-2 MSI Surface Reflectance":
                 sensor_start_year = 2015
@@ -279,9 +279,20 @@ def app():
                 RGB = st.selectbox(
                     "Select an RGB band combination:",
                     [
-                        "NDVI"
+                        "Red/Green/Blue",
+                        "NIR/Red/Green",
+                        "SWIR2/SWIR1/NIR",
+                        "NIR/SWIR1/Red",
+                        "SWIR2/NIR/Red",
+                        "SWIR2/SWIR1/Red",
+                        "SWIR1/NIR/Blue",
+                        "NIR/SWIR1/Blue",
+                        "SWIR2/NIR/Green",
+                        "SWIR1/NIR/Red",
+                        "SWIR2/NIR/SWIR1",
+                        "SWIR1/NIR/SWIR2",
                     ],
-                    index=1,
+                    index=9,
                 )
 
                 frequency = st.selectbox(
