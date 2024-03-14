@@ -254,7 +254,7 @@ def app():
 
                 with st.expander("Customize timelapse"):
 
-                    speed = st.slider("Frames per second:", 1, 30, timelapse_speed)
+                    cloud_pixel_percentage = st.slider(label="cloud pixel rate", min_value=5, max_value=100, step=5, value=85, label_visibility="collapsed")
                     dimensions = st.slider(
                         "Maximum dimensions (Width*Height) in pixels", 768, 2000, 768
                     )
@@ -315,7 +315,7 @@ def app():
                                     end_date=end_date,
                                     bands=bands,
                                     apply_fmask=apply_fmask,
-                                    frames_per_second=speed,
+                                    cloud=cloud_pixel_percentage,
                                     # dimensions=dimensions,
                                     dimensions=768,
                                     frequency=frequency,
@@ -345,7 +345,7 @@ def app():
                                     end_date=end_date,
                                     bands=bands,
                                     apply_fmask=apply_fmask,
-                                    frames_per_second=speed,
+                                    cloud=cloud_pixel_percentage,
                                     dimensions=768,
                                     # dimensions=dimensions,
                                     frequency=frequency,
