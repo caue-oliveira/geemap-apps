@@ -254,7 +254,13 @@ def app():
 
                 with st.expander("Customize timelapse"):
 
-                    cloud_pixel_percentage = st.slider(label="cloud pixel rate", min_value=5, max_value=100, step=5, value=85, label_visibility="collapsed")
+                    cloud_pixel_percentage = st.slider(
+                        "Cloud %",
+                        min_value=5,
+                        max_value=100,
+                        step=5,
+                        value=85,
+                        )
                     dimensions = st.slider(
                         "Maximum dimensions (Width*Height) in pixels", 768, 2000, 768
                     )
