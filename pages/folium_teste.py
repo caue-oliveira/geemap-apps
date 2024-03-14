@@ -227,12 +227,12 @@ def app():
                 title = st.text_input(
                     "Enter a title to show on the timelapse: ", timelapse_title
                 )
-                RGB = st.selectbox(
-                    "Select an RGB band combination:",
+                index_function = st.selectbox(
+                    "Select an index function:",
                     [
-                        "Red/Green/Blue",
-                        "NIR/Red/Green",
-                        "SWIR2/SWIR1/NIR",
+                        "NDVI",
+                        "NDWI",
+                        "SAVI",
                         "NIR/SWIR1/Red",
                         "SWIR2/NIR/Red",
                         "SWIR2/SWIR1/Red",
@@ -302,7 +302,7 @@ def app():
                         end_year = years[1]
                         start_date = str(months[0]).zfill(2) + "-01"
                         end_date = str(months[1]).zfill(2) + "-30"
-                        bands = RGB.split("/")
+                        bands = index_function.split("/")
 
                         try:
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
