@@ -1,13 +1,29 @@
 import streamlit as st
 import geemap.foliumap as geemap
 import ee
-
+import folium
 
 st.title("Interactive Map")
 
 col1, col2 = st.columns([4, 1])
 options = list(geemap.basemaps.keys())
 index = options.index("OpenTopoMap")
+
+# Earth Engine drawing method setup
+def add_ee_layer(self, ee_image_object, vis_params, name):
+    map_id_dict = ee.Image(ee_image_object).getMapId(vis_params)
+    layer = folium.raster_layers.TileLayer(
+        tiles=map_id_dict['tile_fetcher'].url_format,
+        attr='Map Data &copy; <a href="https://earthengine.google.com/">Google Earth Engine</a>',
+        name=name,
+        overlay=True,
+        control=True
+    )
+    layer.add_to(self)
+    return layer
+
+# Configuring Earth Engine display rendering method in Folium
+folium.Map.add_ee_layer = add_ee_layer
 
 with col2:
 
@@ -57,3 +73,8 @@ if collection == "Landsat TM-ETM-OLI Surface Reflectance":
 
     # Adiciona o NDVI ao mapa
     m.addLayer(ndvi, {'min': -0.2, 'max': 1, 'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI')
+
+m.add_ee_layer(ndvi, {'min': -0.2, 'max': 1, 'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI')
+
+count = img_collection.size().getInfo()
+print("Quantidade de imagens na coleção:", count)
