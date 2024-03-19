@@ -270,7 +270,7 @@ def app():
 
                                 clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
-                                m.addLayer(ndvi,
+                                m.add_layer(ndvi,
                                             {'min': -0.2, 'max': 1,
                                              'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
                                             )
