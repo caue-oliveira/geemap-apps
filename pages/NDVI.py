@@ -342,6 +342,7 @@ def app():
                             empty_text.error(
                                 "except message. deu ruim menó"
                             )
+                            m.to_streamlit(height=700)
                             st.stop()
                         else:
                             empty_text.error(
