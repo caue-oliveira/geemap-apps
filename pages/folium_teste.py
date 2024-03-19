@@ -338,32 +338,6 @@ def app():
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
                                 out_gif = geemap.sentinel2_timelapse(
                                     roi=roi,
-                                    out_gif=out_gif,
-                                    start_year=start_year,
-                                    end_year=end_year,
-                                    start_date=start_date,
-                                    end_date=end_date,
-                                    bands=bands,
-                                    apply_fmask=apply_fmask,
-                                    cloud=cloud_pixel_percentage,
-                                    dimensions=768,
-                                    # dimensions=dimensions,
-                                    frequency=frequency,
-                                    date_format=None,
-                                    title=title,
-                                    title_xy=("2%", "90%"),
-                                    add_text=True,
-                                    text_xy=("2%", "2%"),
-                                    text_sequence=None,
-                                    font_type=font_type,
-                                    font_size=font_size,
-                                    font_color=font_color,
-                                    add_progress_bar=True,
-                                    progress_bar_color=progress_bar_color,
-                                    progress_bar_height=5,
-                                    loop=0,
-                                    mp4=mp4,
-                                    fading=fading,
                                 )
                         except:
                             empty_text.error(
