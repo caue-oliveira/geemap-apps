@@ -23,7 +23,7 @@ def add_ee_layer(self, ee_image_object, vis_params, name):
     return layer
 
 # Configuring Earth Engine display rendering method in Folium
-folium.m.add_ee_layer = add_ee_layer
+folium.Map.add_ee_layer = add_ee_layer
 
 with col2:
 
