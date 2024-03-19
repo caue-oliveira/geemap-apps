@@ -2,6 +2,7 @@ import ee
 import os
 import warnings
 import datetime
+import calendar
 import fiona
 import geopandas as gpd
 import folium
@@ -238,7 +239,7 @@ def app():
                     index=9,
                 )
 
-                with st.expander("Customize timelapse"):
+                with st.expander("Customize options"):
 
                     cloud_pixel_percentage = st.slider(
                         "Cloud Coverage 🌥️:",
@@ -258,9 +259,6 @@ def app():
                     months = st.slider("Start and end month:", 1, 12, (1, 12))
 
                 empty_text = st.empty()
-                empty_image = st.empty()
-                empty_fire_image = st.empty()
-                empty_video = st.container()
                 submitted = st.form_submit_button("Submit")
                 if submitted:
                     if sample_roi == "Uploaded GeoJSON" and data is None:
@@ -269,8 +267,13 @@ def app():
                         )
                     else:
                         try:
-                            start_date = str(months[0]).zfill(2) + "-01"
-                            end_date = str(months[1]).zfill(2) + "-30"
+                            start_year = years[0]
+                            end_year = years[1]
+                            start_month = months[0]
+                            end_month = months[1]
+                            start_date = f"{start_year}-{start_month:02d}-01"
+                            end_date = f"{end_year}-{end_month:02d}-{calendar.monthrange(end_year, end_month)[1]}"
+
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
                                 img_collection = (
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
@@ -288,6 +291,8 @@ def app():
                                              'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
                                             )
                                 m.to_streamlit(height=700)
+                                count = img_collection.size().getInfo()
+                                empty_text.error("Quantidade de imagens na coleção: " + str(count))
 
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
                                 out_gif = geemap.sentinel2_timelapse(
