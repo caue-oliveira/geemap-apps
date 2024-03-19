@@ -278,7 +278,6 @@ def app():
                                 img_collection = (
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
                                     .filterBounds(sample_roi)
-                                    .filterDate(start_date, end_date)
                                     .sort('CLOUD_COVER')
                                 )
 
