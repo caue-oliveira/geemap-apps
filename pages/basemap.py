@@ -42,7 +42,6 @@ with col1:
 
     m.add_basemap("HYBRID")
     m.add_basemap(basemap)
-    m.to_streamlit(height=700)
 
 bsb = [
     [-48.2973, -15.4973],  # Sudoeste
@@ -78,3 +77,7 @@ m.add_ee_layer(ndvi, {'min': -0.2, 'max': 1, 'palette': ['B62F02', 'D87B32', 'FC
 
 count = img_collection.size().getInfo()
 print("Quantidade de imagens na coleção:", count)
+
+m.add_layer(ndvi, {'min': -0.2, 'max': 1, 'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']},'NDVI')
+
+m.to_streamlit(height=700)
