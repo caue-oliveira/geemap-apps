@@ -288,6 +288,7 @@ def app():
                     empty_text.error(
                         "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
                     )
+        m.to_streamlit(height=700)
 try:
     app()
 except Exception as e:
