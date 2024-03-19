@@ -207,7 +207,7 @@ def app():
         ]:
 
             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
-                sensor_start_year = 1984
+                sensor_start_year = 2013
                 timelapse_title = "Landsat Index"
 
             elif collection == "Sentinel-2 MSI Surface Reflectance":
@@ -219,11 +219,6 @@ def app():
                 roi = None
                 if st.session_state.get("roi") is not None:
                     roi = st.session_state.get("roi")
-                out_gif = geemap.temp_file_path(".gif")
-
-                title = st.text_input(
-                    "Enter a title to show on your image: ", timelapse_title
-                )
                 index_function = st.selectbox(
                     "Select an index function:",
                     [
@@ -243,12 +238,6 @@ def app():
                     index=9,
                 )
 
-                frequency = st.selectbox(
-                    "Select a temporal frequency:",
-                    ["year", "quarter", "month"],
-                    index=0,
-                )
-
                 with st.expander("Customize timelapse"):
 
                     cloud_pixel_percentage = st.slider(
@@ -258,44 +247,15 @@ def app():
                         step=5,
                         value=85,
                         )
-                    dimensions = st.slider(
-                        "Maximum dimensions (Width*Height) in pixels", 768, 2000, 768
-                    )
-                    progress_bar_color = st.color_picker(
-                        "Progress bar color:", "#0000ff"
-                    )
+
                     years = st.slider(
                         "Start and end year:",
                         sensor_start_year,
                         today.year,
-                        (sensor_start_year, today.year),
+
+                      (sensor_start_year, today.year),
                     )
                     months = st.slider("Start and end month:", 1, 12, (1, 12))
-                    font_size = st.slider("Font size:", 10, 50, 30)
-                    font_color = st.color_picker("Font color:", "#ffffff")
-                    apply_fmask = st.checkbox(
-                        "Apply fmask (remove clouds, shadows, snow)", True
-                    )
-                    font_type = st.selectbox(
-                        "Select the font type for the title:",
-                        ["arial.ttf", "alibaba.otf"],
-                        index=0,
-                    )
-                    fading = st.slider(
-                        "Fading duration (seconds) for each frame:", 0.0, 3.0, 0.0
-                    )
-                    mp4 = st.checkbox("Save timelapse as MP4", True)
-
-#### IMAGE PROCESSING INDEX
-                def getNDVI(collection):
-                    if collection == 'Landsat TM-ETM-OLI Surface Reflectance':
-                        ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
-                        return ndvi
-                    elif collection == 'Sentinel-2 MSI Surface Reflectance':
-                        return img_collection.normalizedDifference(['B8', 'B4'])
-
-
- #### IMAGE PROCESSING END
 
                 empty_text = st.empty()
                 empty_image = st.empty()
