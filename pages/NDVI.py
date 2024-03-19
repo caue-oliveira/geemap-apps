@@ -303,42 +303,20 @@ def app():
                 empty_video = st.container()
                 submitted = st.form_submit_button("Submit")
                 if submitted:
-
                     if sample_roi == "Uploaded GeoJSON" and data is None:
                         empty_text.warning(
                             "Steps to create a timelapse: Draw a rectangle on the map -> Export it as a GeoJSON -> Upload it back to the app -> Click the Submit button. Alternatively, you can select a sample ROI from the dropdown list."
                         )
-
                     else:
-                        empty_text.text("Computing... Please wait...")
-
-                        start_date = str(months[0]).zfill(2) + "-01"
-                        end_date = str(months[1]).zfill(2) + "-30"
-                        if collection == "Landsat TM-ETM-OLI Surface Reflectance":
-                            img_collection = (
-                                ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
-                                .filterBounds(sample_roi)
-                                .filterDate(start_date, end_date)
-                                .sort(ee.Filter.lt('CLOUD_COVER', cloud_pixel_percentage))
-                            )
-
-                            img_filter = img_collection.first()
-
-                            clip_sr_img = img_filter.clip(sample_roi).multiply(0.0000275).add(-0.2)
-                            ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
-                            m.add_layer(ndvi,
-                                        {'min': -0.2, 'max': 1,
-                                         'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
-                                        )
-                            m.to_streamlit(height=700)
-
                         try:
+                            start_date = str(months[0]).zfill(2) + "-01"
+                            end_date = str(months[1]).zfill(2) + "-30"
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
                                 img_collection = (
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
                                     .filterBounds(sample_roi)
                                     .filterDate(start_date, end_date)
-                                    .sort(ee.Filter.lt('CLOUD_COVER', cloud_pixel_percentage))
+                                    .sort('CLOUD_COVER')
                                 )
 
                                 img_filter = img_collection.first()
@@ -347,23 +325,23 @@ def app():
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
                                 m.add_layer(ndvi,
                                             {'min': -0.2, 'max': 1,
-                                             'palette': ['B62F02', 'D87B32','FCF40D','62C41C','0A5C1C']},'NDVI'
-                                )
+                                             'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
+                                            )
                                 m.to_streamlit(height=700)
 
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
                                 out_gif = geemap.sentinel2_timelapse(
                                     roi=roi,
                                 )
-                        except:
+                        except Exception as e:
                             empty_text.error(
-                                "except message. deu ruim menó"
+                                "An error occurred: " + str(e)
                             )
                             st.stop()
-                        else:
-                            empty_text.error(
-                                "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
-                            )
+                else:
+                    empty_text.error(
+                        "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
+                    )
 try:
     app()
 except Exception as e:
