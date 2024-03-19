@@ -13,7 +13,16 @@ with col2:
 
 
 with col1:
+    # Defina o mapa globalmente
+    m = geemap.Map(
+        basemap="HYBRID",
+        plugin_Draw=True,
+        Draw_export=True,
+        locate_control=True,
+        plugin_LatLngPopup=False,
+    )
 
-    m = geemap.Map()
+    m.add_basemap("HYBRID")
     m.add_basemap(basemap)
     m.to_streamlit(height=700)
+
