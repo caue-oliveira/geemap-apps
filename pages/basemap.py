@@ -1,5 +1,7 @@
 import streamlit as st
 import geemap.foliumap as geemap
+import ee
+
 
 st.title("Interactive Map")
 
@@ -26,3 +28,32 @@ with col1:
     m.add_basemap(basemap)
     m.to_streamlit(height=700)
 
+bsb = [
+    [-48.2973, -15.4973],  # Sudoeste
+    [-48.2973, -15.9761],  # Noroeste
+    [-47.3894, -15.9761],  # Nordeste
+    [-47.3894, -15.4973],  # Sudeste
+    [-48.2973, -15.4973]  # Fechar polígono
+]
+sample_roi = ee.Geometry.Polygon(bsb)
+
+collection = "Landsat TM-ETM-OLI Surface Reflectance"
+
+if collection == "Landsat TM-ETM-OLI Surface Reflectance":
+    img_collection = (
+        ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
+        .filterBounds(sample_roi)
+        .sort('CLOUD_COVER')
+    )
+
+    # Seleciona a primeira imagem da coleção
+    img = img_collection.first()
+
+    # Clip da imagem
+    clip_sr_img = img.clip(sample_roi).multiply(0.0000275).add(-0.2)
+
+    # Calcula o NDVI
+    ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
+
+    # Adiciona o NDVI ao mapa
+    m.addLayer(ndvi, {'min': -0.2, 'max': 1, 'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI')
