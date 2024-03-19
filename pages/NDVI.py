@@ -15,15 +15,6 @@ from shapely.geometry import Polygon
 st.set_page_config(layout="wide")
 warnings.filterwarnings("ignore")
 
-bsb = [
-    [-48.2973, -15.4973],  # Sudoeste
-    [-48.2973, -15.9761],  # Noroeste
-    [-47.3894, -15.9761],  # Nordeste
-    [-47.3894, -15.4973],  # Sudeste
-    [-48.2973, -15.4973]  # Fechar polígono
-]
-sample_roi = ee.Geometry.Polygon(bsb)
-
 @st.cache_data
 def ee_authenticate(token_name="EARTHENGINE_TOKEN"):
     geemap.ee_initialize(token_name=token_name)
@@ -86,7 +77,15 @@ def app():
     st.session_state["bands"] = None
     st.session_state["palette"] = None
     st.session_state["vis_params"] = None
-
+    bsb = [
+        [-48.2973, -15.4973],  # Sudoeste
+        [-48.2973, -15.9761],  # Noroeste
+        [-47.3894, -15.9761],  # Nordeste
+        [-47.3894, -15.4973],  # Sudeste
+        [-48.2973, -15.4973]  # Fechar polígono
+    ]
+    sample_roi = ee.Geometry.Polygon(bsb)
+    
     with row1_col1:
         ee_authenticate(token_name="EARTHENGINE_TOKEN")
         m = geemap.Map(
@@ -97,7 +96,7 @@ def app():
             plugin_LatLngPopup=False,
         )
         m.add_basemap("ROADMAP")
-
+        m.add_layer(sample_roi)
     with row1_col2:
 
         keyword = st.text_input("Search for a location:", "")
