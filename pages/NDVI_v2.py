@@ -1,62 +1,23 @@
 import ee
+import os
 import warnings
+import datetime
+import calendar
 import fiona
 import geopandas as gpd
 import folium
 import streamlit as st
+import geemap.colormaps as cm
 import geemap.foliumap as geemap
 from datetime import date
+from shapely.geometry import Polygon
 
 st.set_page_config(layout="wide")
 warnings.filterwarnings("ignore")
 
-# Defina o mapa globalmente
-m = geemap.Map(
-    basemap="HYBRID",
-    plugin_Draw=True,
-    Draw_export=True,
-    locate_control=True,
-    plugin_LatLngPopup=False,
-)
-m.add_basemap("HYBRID")
-folium.LayerControl().add_to(m)
-
-
-# Método para desenhar
-def add_ee_layer(self, ee_image_object, vis_params, name):
-    map_id_dict = ee.Image(ee_image_object).getMapId(vis_params)
-    layer = folium.raster_layers.TileLayer(
-        tiles=map_id_dict['tile_fetcher'].url_format,
-        attr='Map Data &copy; <a href="https://earthengine.google.com/">Google Earth Engine</a>',
-        name=name,
-        overlay=True,
-        control=True
-    )
-    layer.add_to(self)
-    return layer
-
-    # Configuring Earth Engine display rendering method in Folium
-folium.Map.add_ee_layer = add_ee_layer
-
-
 @st.cache_data
 def ee_authenticate(token_name="EARTHENGINE_TOKEN"):
     geemap.ee_initialize(token_name=token_name)
-
-
-st.sidebar.info(
-    """
-    - Side bar
-    """
-)
-
-st.sidebar.title("Contact")
-st.sidebar.info(
-    """
-    Cauê Oliveira Miranda
-    [URL](https://github.com/giswqs) | [Linkedin](https://twitter.com/giswqs) | [Currículo](https://www.youtube.com/c/QiushengWu)
-    """
-)
 
 @st.cache_data
 def uploaded_file_to_gdf(data):
@@ -104,7 +65,14 @@ def app():
 
     with row1_col1:
         ee_authenticate(token_name="EARTHENGINE_TOKEN")
-        # Remove a criação do mapa daqui
+        m = geemap.Map(
+            basemap="HYBRID",
+            plugin_Draw=True,
+            Draw_export=True,
+            locate_control=True,
+            plugin_LatLngPopup=False,
+        )
+        m.add_basemap("ROADMAP")
 
     with row1_col2:
 
@@ -224,7 +192,7 @@ def app():
         ]:
 
             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
-                sensor_start_year = 1984
+                sensor_start_year = 2013
                 timelapse_title = "Landsat Index"
 
             elif collection == "Sentinel-2 MSI Surface Reflectance":
@@ -236,10 +204,6 @@ def app():
                 roi = None
                 if st.session_state.get("roi") is not None:
                     roi = st.session_state.get("roi")
-
-                title = st.text_input(
-                    "Enter a title to show on your image: ", timelapse_title
-                )
                 index_function = st.selectbox(
                     "Select an index function:",
                     [
@@ -259,13 +223,7 @@ def app():
                     index=9,
                 )
 
-                frequency = st.selectbox(
-                    "Select a temporal frequency:",
-                    ["year", "quarter", "month"],
-                    index=0,
-                )
-
-                with st.expander("Customize timelapse"):
+                with st.expander("Customize options"):
 
                     cloud_pixel_percentage = st.slider(
                         "Cloud Coverage 🌥️:",
@@ -274,94 +232,65 @@ def app():
                         step=5,
                         value=85,
                         )
-                    dimensions = st.slider(
-                        "Maximum dimensions (Width*Height) in pixels", 768, 2000, 768
-                    )
-                    progress_bar_color = st.color_picker(
-                        "Progress bar color:", "#0000ff"
-                    )
+
                     years = st.slider(
                         "Start and end year:",
                         sensor_start_year,
                         today.year,
-                        (sensor_start_year, today.year),
+
+                      (sensor_start_year, today.year),
                     )
                     months = st.slider("Start and end month:", 1, 12, (1, 12))
-                    font_size = st.slider("Font size:", 10, 50, 30)
-                    font_color = st.color_picker("Font color:", "#ffffff")
-                    apply_fmask = st.checkbox(
-                        "Apply fmask (remove clouds, shadows, snow)", True
-                    )
-                    font_type = st.selectbox(
-                        "Select the font type for the title:",
-                        ["arial.ttf", "alibaba.otf"],
-                        index=0,
-                    )
-                    fading = st.slider(
-                        "Fading duration (seconds) for each frame:", 0.0, 3.0, 0.0
-                    )
-                    mp4 = st.checkbox("Save timelapse as MP4", True)
-
-#### IMAGE PROCESSING INDEX
-                def getNDVI(collection):
-                    if collection == 'Landsat TM-ETM-OLI Surface Reflectance':
-                        ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
-                        return ndvi
-                    elif collection == 'Sentinel-2 MSI Surface Reflectance':
-                        return img_collection.normalizedDifference(['B8', 'B4'])
-
-
- #### IMAGE PROCESSING END
 
                 empty_text = st.empty()
-                empty_image = st.empty()
-                empty_fire_image = st.empty()
-                empty_video = st.container()
                 submitted = st.form_submit_button("Submit")
                 if submitted:
-
                     if sample_roi == "Uploaded GeoJSON" and data is None:
                         empty_text.warning(
                             "Steps to create a timelapse: Draw a rectangle on the map -> Export it as a GeoJSON -> Upload it back to the app -> Click the Submit button. Alternatively, you can select a sample ROI from the dropdown list."
                         )
                     else:
-
-                        empty_text.text("Computing... Please wait...")
-
-                        start_date = str(months[0]).zfill(2) + "-01"
-                        end_date = str(months[1]).zfill(2) + "-30"
-
                         try:
+                            start_year = years[0]
+                            end_year = years[1]
+                            start_month = months[0]
+                            end_month = months[1]
+                            start_date = f"{start_year}-{start_month:02d}-01"
+                            end_date = f"{end_year}-{end_month:02d}-{calendar.monthrange(end_year, end_month)[1]}"
+
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
                                 img_collection = (
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
-                                    .filterBounds(sample_roi)
+                                    .filterBounds(roi)
                                     .filterDate(start_date, end_date)
-                                    .sort(ee.Filter.lt('CLOUD_COVER', cloud_pixel_percentage))
+                                    .sort('CLOUD_COVER')
                                 )
 
                                 img_filter = img_collection.first()
 
-                                clip_sr_img = img_filter.clip(sample_roi).multiply(0.0000275).add(-0.2)
+                                clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
-                                m.add_ee_layer(ndvi,
+                                m.add_layer(ndvi,
                                             {'min': -0.2, 'max': 1,
-                                             'palette': ['B62F02', 'D87B32','FCF40D','62C41C','0A5C1C']},'NDVI'
-                                )
+                                             'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
+                                            )
+                                m.to_streamlit(height=700)
+                                count = img_collection.size().getInfo()
+                                empty_text.error("Quantidade de imagens na coleção: " + str(count))
+
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
                                 out_gif = geemap.sentinel2_timelapse(
                                     roi=roi,
                                 )
-                        except:
+                        except Exception as e:
                             empty_text.error(
-                                "An error occurred while computing the timelapse. Your probably requested too much data. Try reducing the ROI or timespan."
+                                "An error occurred: " + str(e)
                             )
                             st.stop()
-
-                        else:
-                            empty_text.error(
-                                "Deu ruim, menó"
-                            )
+                else:
+                    empty_text.error(
+                        "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
+                    )
 try:
     app()
 except Exception as e:
