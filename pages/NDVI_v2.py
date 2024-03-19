@@ -279,9 +279,7 @@ def app():
                                 empty_text.error("Quantidade de imagens na coleção: " + str(count))
 
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
-                                out_gif = geemap.sentinel2_timelapse(
-                                    roi=roi,
-                                )
+                                empty_text.error("Sentinel in progress")
                         except Exception as e:
                             empty_text.error(
                                 "An error occurred: " + str(e)
