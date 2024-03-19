@@ -18,7 +18,24 @@ m = geemap.Map(
     locate_control=True,
     plugin_LatLngPopup=False,
 )
-m.add_basemap("ROADMAP")
+m.add_basemap("HYBRID")
+
+# Método para desenhar
+def add_ee_layer(self, ee_image_object, vis_params, name):
+    map_id_dict = ee.Image(ee_image_object).getMapId(vis_params)
+    layer = folium.raster_layers.TileLayer(
+        tiles=map_id_dict['tile_fetcher'].url_format,
+        attr='Map Data &copy; <a href="https://earthengine.google.com/">Google Earth Engine</a>',
+        name=name,
+        overlay=True,
+        control=True
+    )
+    layer.add_to(self)
+    return layer
+
+    # Configuring Earth Engine display rendering method in Folium
+folium.Map.add_ee_layer = add_ee_layer
+
 
 @st.cache_data
 def ee_authenticate(token_name="EARTHENGINE_TOKEN"):
@@ -325,7 +342,7 @@ def app():
 
                                 clip_sr_img = img_filter.clip(sample_roi).multiply(0.0000275).add(-0.2)
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
-                                m.add_layer(ndvi,
+                                m.add_ee_layer(ndvi,
                                             {'min': -0.2, 'max': 1,
                                              'palette': ['B62F02', 'D87B32','FCF40D','62C41C','0A5C1C']},'NDVI'
                                 )
