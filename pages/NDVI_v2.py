@@ -19,7 +19,7 @@ m = geemap.Map(
     plugin_LatLngPopup=False,
 )
 m.add_basemap("HYBRID")
-
+folium.LayerControl().add_to(m)
 
 
 # Método para desenhar
