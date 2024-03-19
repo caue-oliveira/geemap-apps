@@ -32,7 +32,7 @@ with col2:
 
 with col1:
     # Defina o mapa globalmente
-    m = geemap.Map(
+    Map = geemap.Map(
         basemap="HYBRID",
         plugin_Draw=True,
         Draw_export=True,
@@ -40,9 +40,9 @@ with col1:
         plugin_LatLngPopup=False,
     )
 
-    m.add_basemap("HYBRID")
-    m.add_basemap(basemap)
-    m.to_streamlit(height=700)
+    Map.add_basemap("HYBRID")
+    Map.add_basemap(basemap)
+    Map.to_streamlit(height=700)
 
 bsb = [
     [-48.2973, -15.4973],  # Sudoeste
@@ -53,28 +53,25 @@ bsb = [
 ]
 sample_roi = ee.Geometry.Polygon(bsb)
 
-collection = "Landsat TM-ETM-OLI Surface Reflectance"
-
-if collection == "Landsat TM-ETM-OLI Surface Reflectance":
-    img_collection = (
+img_collection = (
         ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
         .filterBounds(sample_roi)
         .sort('CLOUD_COVER')
     )
 
     # Seleciona a primeira imagem da coleção
-    img = img_collection.first()
+img = img_collection.first()
 
     # Clip da imagem
-    clip_sr_img = img.clip(sample_roi).multiply(0.0000275).add(-0.2)
+clip_sr_img = img.clip(sample_roi).multiply(0.0000275).add(-0.2)
 
     # Calcula o NDVI
-    ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
+ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
 
     # Adiciona o NDVI ao mapa
-    m.addLayer(ndvi, {'min': -0.2, 'max': 1, 'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI')
+Map.addLayer(ndvi, {'min': -0.2, 'max': 1, 'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI')
 
-m.add_ee_layer(ndvi, {'min': -0.2, 'max': 1, 'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI')
+Map.add_ee_layer(ndvi, {'min': -0.2, 'max': 1, 'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI')
 
 count = img_collection.size().getInfo()
 print("Quantidade de imagens na coleção:", count)
