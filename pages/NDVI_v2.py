@@ -20,6 +20,8 @@ m = geemap.Map(
 )
 m.add_basemap("HYBRID")
 
+
+
 # Método para desenhar
 def add_ee_layer(self, ee_image_object, vis_params, name):
     map_id_dict = ee.Image(ee_image_object).getMapId(vis_params)
