@@ -32,12 +32,13 @@ with col2:
 
 with col1:
     # Defina o mapa globalmente
-    m = folium.Map(tiles=None)
-
-    folium.TileLayer("OpenStreetMap").add_to(m)
-    folium.TileLayer(show=False).add_to(m)
-
-    folium.LayerControl().add_to(m)
+    m = geemap.Map(
+        basemap="HYBRID",
+        plugin_Draw=True,
+        Draw_export=True,
+        locate_control=True,
+        plugin_LatLngPopup=False,
+    )
 
     m.add_basemap("HYBRID")
     m.add_basemap(basemap)
