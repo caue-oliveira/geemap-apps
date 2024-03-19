@@ -77,15 +77,7 @@ def app():
     st.session_state["bands"] = None
     st.session_state["palette"] = None
     st.session_state["vis_params"] = None
-    bsb = [
-        [-48.2973, -15.4973],  # Sudoeste
-        [-48.2973, -15.9761],  # Noroeste
-        [-47.3894, -15.9761],  # Nordeste
-        [-47.3894, -15.4973],  # Sudeste
-        [-48.2973, -15.4973]  # Fechar polígono
-    ]
-    sample_roi = ee.Geometry.Polygon(bsb)
-    
+
     with row1_col1:
         ee_authenticate(token_name="EARTHENGINE_TOKEN")
         m = geemap.Map(
@@ -96,7 +88,7 @@ def app():
             plugin_LatLngPopup=False,
         )
         m.add_basemap("ROADMAP")
-        m.add_layer(sample_roi)
+
     with row1_col2:
 
         keyword = st.text_input("Search for a location:", "")
@@ -284,14 +276,14 @@ def app():
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
                                 img_collection = (
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
-                                    .filterBounds(sample_roi)
+                                    .filterBounds(st.session_state["roi"])
                                     .filterDate(start_date, end_date)
                                     .sort('CLOUD_COVER')
                                 )
 
                                 img_filter = img_collection.first()
 
-                                clip_sr_img = img_filter.clip(sample_roi).multiply(0.0000275).add(-0.2)
+                                clip_sr_img = img_filter.clip(st.session_state["roi"]).multiply(0.0000275).add(-0.2)
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
                                 m.add_layer(ndvi,
                                             {'min': -0.2, 'max': 1,
