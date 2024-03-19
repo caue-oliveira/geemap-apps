@@ -15,6 +15,14 @@ from shapely.geometry import Polygon
 st.set_page_config(layout="wide")
 warnings.filterwarnings("ignore")
 
+bsb = [
+    [-48.2973, -15.4973],  # Sudoeste
+    [-48.2973, -15.9761],  # Noroeste
+    [-47.3894, -15.9761],  # Nordeste
+    [-47.3894, -15.4973],  # Sudeste
+    [-48.2973, -15.4973]  # Fechar polígono
+]
+sample_roi = ee.Geometry.Polygon(bsb)
 
 @st.cache_data
 def ee_authenticate(token_name="EARTHENGINE_TOKEN"):
@@ -277,7 +285,8 @@ def app():
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
                                 img_collection = (
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
-                                    .filterBounds(gdf)
+                                    .filterBounds(sample_roi)
+                                    .filterDate(start_date, end_date)
                                     .sort('CLOUD_COVER')
                                 )
 
