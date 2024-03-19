@@ -308,12 +308,29 @@ def app():
                         empty_text.warning(
                             "Steps to create a timelapse: Draw a rectangle on the map -> Export it as a GeoJSON -> Upload it back to the app -> Click the Submit button. Alternatively, you can select a sample ROI from the dropdown list."
                         )
-                    else:
 
+                    else:
                         empty_text.text("Computing... Please wait...")
 
                         start_date = str(months[0]).zfill(2) + "-01"
                         end_date = str(months[1]).zfill(2) + "-30"
+                        if collection == "Landsat TM-ETM-OLI Surface Reflectance":
+                            img_collection = (
+                                ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
+                                .filterBounds(sample_roi)
+                                .filterDate(start_date, end_date)
+                                .sort(ee.Filter.lt('CLOUD_COVER', cloud_pixel_percentage))
+                            )
+
+                            img_filter = img_collection.first()
+
+                            clip_sr_img = img_filter.clip(sample_roi).multiply(0.0000275).add(-0.2)
+                            ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
+                            m.add_layer(ndvi,
+                                        {'min': -0.2, 'max': 1,
+                                         'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
+                                        )
+                            m.to_streamlit(height=700)
 
                         try:
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
@@ -342,7 +359,6 @@ def app():
                             empty_text.error(
                                 "except message. deu ruim menó"
                             )
-                            m.to_streamlit(height=700)
                             st.stop()
                         else:
                             empty_text.error(
