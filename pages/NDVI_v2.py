@@ -1,15 +1,11 @@
 import ee
-import os
 import warnings
-import datetime
 import fiona
 import geopandas as gpd
 import folium
 import streamlit as st
-import geemap.colormaps as cm
 import geemap.foliumap as geemap
 from datetime import date
-from shapely.geometry import Polygon
 
 st.set_page_config(layout="wide")
 warnings.filterwarnings("ignore")
@@ -221,7 +217,6 @@ def app():
                 roi = None
                 if st.session_state.get("roi") is not None:
                     roi = st.session_state.get("roi")
-                out_gif = geemap.temp_file_path(".gif")
 
                 title = st.text_input(
                     "Enter a title to show on your image: ", timelapse_title
@@ -314,11 +309,8 @@ def app():
 
                         empty_text.text("Computing... Please wait...")
 
-                        start_year = years[0]
-                        end_year = years[1]
                         start_date = str(months[0]).zfill(2) + "-01"
                         end_date = str(months[1]).zfill(2) + "-30"
-                        bands = index_function.split("/")
 
                         try:
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
@@ -347,24 +339,9 @@ def app():
                             )
                             st.stop()
 
-                        if out_gif is not None and os.path.exists(out_gif):
-
-                            empty_text.text(
-                                "Right click the GIF to save it to your computer👇"
-                            )
-                            empty_image.image(out_gif)
-
-                            out_mp4 = out_gif.replace(".gif", ".mp4")
-                            if mp4 and os.path.exists(out_mp4):
-                                with empty_video:
-                                    st.text(
-                                        "Right click the MP4 to save it to your computer👇"
-                                    )
-                                    st.video(out_gif.replace(".gif", ".mp4"))
-
                         else:
                             empty_text.error(
-                                "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
+                                "Deu ruim, menó"
                             )
 try:
     app()

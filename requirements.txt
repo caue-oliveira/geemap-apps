@@ -2,3 +2,5 @@ geemap
 streamlit
 fiona
 geopandas
+ee
+folium
