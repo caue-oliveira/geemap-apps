@@ -277,7 +277,7 @@ def app():
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
                                 img_collection = (
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
-                                    .filterBounds(sample_roi)
+                                    .filterBounds(gdf)
                                     .sort('CLOUD_COVER')
                                 )
 
