@@ -312,11 +312,8 @@ def app():
 
                         empty_text.text("Computing... Please wait...")
 
-                        start_year = years[0]
-                        end_year = years[1]
                         start_date = str(months[0]).zfill(2) + "-01"
                         end_date = str(months[1]).zfill(2) + "-30"
-                        bands = index_function.split("/")
 
                         try:
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
@@ -335,6 +332,8 @@ def app():
                                             {'min': -0.2, 'max': 1,
                                              'palette': ['B62F02', 'D87B32','FCF40D','62C41C','0A5C1C']},'NDVI'
                                 )
+                                m.to_streamlit(height=700)
+
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
                                 out_gif = geemap.sentinel2_timelapse(
                                     roi=roi,
@@ -344,22 +343,6 @@ def app():
                                 "An error occurred while computing the timelapse. Your probably requested too much data. Try reducing the ROI or timespan."
                             )
                             st.stop()
-
-                        if out_gif is not None and os.path.exists(out_gif):
-
-                            empty_text.text(
-                                "Right click the GIF to save it to your computer👇"
-                            )
-                            empty_image.image(out_gif)
-
-                            out_mp4 = out_gif.replace(".gif", ".mp4")
-                            if mp4 and os.path.exists(out_mp4):
-                                with empty_video:
-                                    st.text(
-                                        "Right click the MP4 to save it to your computer👇"
-                                    )
-                                    st.video(out_gif.replace(".gif", ".mp4"))
-
                         else:
                             empty_text.error(
                                 "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
