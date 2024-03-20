@@ -57,13 +57,13 @@ def app():
     with row1_col1:
         ee_authenticate(token_name="EARTHENGINE_TOKEN")
         m = geemap.Map(
-            basemap="HYBRID",
+            basemap="ROADMAP",
             plugin_Draw=True,
             Draw_export=True,
             locate_control=True,
             plugin_LatLngPopup=False,
         )
-        m.add_basemap("ROADMAP")
+        m.add_basemap("HYBRID")
 
     with row1_col2:
 
