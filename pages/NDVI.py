@@ -19,21 +19,6 @@ warnings.filterwarnings("ignore")
 def ee_authenticate(token_name="EARTHENGINE_TOKEN"):
     geemap.ee_initialize(token_name=token_name)
 
-
-st.sidebar.info(
-    """
-    - Side bar
-    """
-)
-
-st.sidebar.title("Contact")
-st.sidebar.info(
-    """
-    Cauê Oliveira Miranda
-    [URL](https://github.com/giswqs) | [Linkedin](https://twitter.com/giswqs) | [Currículo](https://www.youtube.com/c/QiushengWu)
-    """
-)
-
 @st.cache_data
 def uploaded_file_to_gdf(data):
     import tempfile
@@ -276,27 +261,25 @@ def app():
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
                                 img_collection = (
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
-                                    .filterBounds(st.session_state["roi"])
+                                    .filterBounds(roi)
                                     .filterDate(start_date, end_date)
                                     .sort('CLOUD_COVER')
                                 )
 
                                 img_filter = img_collection.first()
 
-                                clip_sr_img = img_filter.clip(st.session_state["roi"]).multiply(0.0000275).add(-0.2)
+                                clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
                                 m.add_layer(ndvi,
                                             {'min': -0.2, 'max': 1,
                                              'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
                                             )
-                                m.to_streamlit(height=700)
+                                m.to_streamlit(height=600)
                                 count = img_collection.size().getInfo()
                                 empty_text.error("Quantidade de imagens na coleção: " + str(count))
 
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
-                                out_gif = geemap.sentinel2_timelapse(
-                                    roi=roi,
-                                )
+                                empty_text.error("Sentinel in progress")
                         except Exception as e:
                             empty_text.error(
                                 "An error occurred: " + str(e)
