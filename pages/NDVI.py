@@ -233,6 +233,7 @@ def app():
 
                 empty_text = st.empty()
                 submitted = st.form_submit_button("Submit")
+                download_url = st.empty()
                 if submitted:
                     if sample_roi == "Uploaded GeoJSON" and data is None:
                         empty_text.warning(
@@ -265,7 +266,7 @@ def app():
                                             )
                                 count = img_collection.size().getInfo()
                                 empty_text.error("Total image available: " + str(count))
-                                empty_text.error("Tot321321321321321e: " + str(count))
+                                download_url.text("Tot321321321321321e: " + str(count))
 
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
                                 empty_text.error("Sentinel in progress")
