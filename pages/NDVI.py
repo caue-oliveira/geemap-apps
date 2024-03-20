@@ -272,7 +272,6 @@ def app():
                                             {'min': -0.2, 'max': 1,
                                              'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
                                             )
-                                m.to_streamlit(height=600)
                                 count = img_collection.size().getInfo()
                                 empty_text.error("Quantidade de imagens na coleção: " + str(count))
 
