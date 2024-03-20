@@ -143,6 +143,7 @@ def app():
             gdf = uploaded_file_to_gdf(data)
             try:
                 st.session_state["roi"] = geemap.gdf_to_ee(gdf, geodesic=False)
+                roi = st.session_state.get("roi")
                 m.add_gdf(gdf, "ROI")
             except Exception as e:
                 st.error(e)
@@ -166,9 +167,6 @@ def app():
 
             with st.form("submit_landsat_form"):
 
-                roi = None
-                if st.session_state.get("roi") is not None:
-                    roi = st.session_state.get("roi")
                 index_function = st.selectbox(
                     "Select an index function:",
                     [
@@ -226,14 +224,14 @@ def app():
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
                                 img_collection = (
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
-                                    .filterBounds(data)
+                                    .filterBounds(roi)
                                     .filterDate(start_date, end_date)
                                     .sort('CLOUD_COVER')
                                 )
 
                                 img_filter = img_collection.first()
 
-                                clip_sr_img = img_filter.clip(data).multiply(0.0000275).add(-0.2)
+                                clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
                                 m.add_layer(ndvi,
                                             {'min': -0.2, 'max': 1,
