@@ -184,8 +184,6 @@ def app():
 
         m.to_streamlit(height=600)
 
-    with row1_col2:
-
         if collection in [
             "Landsat TM-ETM-OLI Surface Reflectance",
             "Sentinel-2 MSI Surface Reflectance",
