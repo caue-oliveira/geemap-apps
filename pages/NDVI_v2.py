@@ -249,12 +249,8 @@ def app():
                                 "An error occurred: " + str(e)
                             )
                             st.stop()
-                    m.to_streamlit(height=600)
-                    
-                else:
-                    empty_text.error(
-                        "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
-                    )
+                m.to_streamlit(height=600)
+
 try:
     app()
 except Exception as e:
