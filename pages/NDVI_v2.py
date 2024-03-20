@@ -247,7 +247,7 @@ def app():
                                 "An error occurred: " + str(e)
                             )
                             st.stop()
-    m.to_streamlit(height=600)
+                    m.to_streamlit(height=600)
 try:
     app()
 except Exception as e:
