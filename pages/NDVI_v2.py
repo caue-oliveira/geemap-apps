@@ -58,11 +58,6 @@ def app():
     if st.session_state.get("zoom_level") is None:
         st.session_state["zoom_level"] = 4
 
-    st.session_state["ee_asset_id"] = None
-    st.session_state["bands"] = None
-    st.session_state["palette"] = None
-    st.session_state["vis_params"] = None
-
     with row1_col1:
         ee_authenticate(token_name="EARTHENGINE_TOKEN")
         m = geemap.Map(
@@ -184,6 +179,8 @@ def app():
 
         m.to_streamlit(height=600)
 
+    with row1_col2:
+
         if collection in [
             "Landsat TM-ETM-OLI Surface Reflectance",
             "Sentinel-2 MSI Surface Reflectance",
@@ -273,7 +270,7 @@ def app():
                                              'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
                                             )
                                 count = img_collection.size().getInfo()
-                                empty_text.error("Quantidade de imagens na coleção: " + str(count))
+                                empty_text.error("Quantidade de imagens disponíveis: " + str(count))
 
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
                                 empty_text.error("Sentinel in progress")
@@ -286,44 +283,6 @@ def app():
                     empty_text.error(
                         "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
                     )
-
-    with row1_col1:
-        if submitted:
-            if data is not None:
-                try:
-                    start_year = years[0]
-                    end_year = years[1]
-                    start_month = months[0]
-                    end_month = months[1]
-                    start_date = f"{start_year}-{start_month:02d}-01"
-                    end_date = f"{end_year}-{end_month:02d}-{calendar.monthrange(end_year, end_month)[1]}"
-
-                    if collection == "Landsat TM-ETM-OLI Surface Reflectance":
-                        img_collection = (
-                            ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
-                            .filterBounds(roi)
-                            .filterDate(start_date, end_date)
-                            .sort('CLOUD_COVER')
-                        )
-
-                        img_filter = img_collection.first()
-
-                        clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
-                        ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
-                        m.add_layer(ndvi,
-                                    {'min': -0.2, 'max': 1,
-                                     'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
-                                    )
-                        count = img_collection.size().getInfo()
-                        empty_text.error("Quantidade de imagens na coleção: " + str(count))
-
-                    elif collection == "Sentinel-2 MSI Surface Reflectance":
-                        empty_text.error("Sentinel in progress")
-                except Exception as e:
-                    empty_text.error(
-                        "An error occurred: " + str(e)
-                    )
-                    st.stop()
 try:
     app()
 except Exception as e:
