@@ -278,7 +278,6 @@ def app():
 
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
                                 empty_text.error("Sentinel in progress")
-                            m.to_streamlit(height=600)
                         except Exception as e:
                             empty_text.error(
                                 "An error occurred: " + str(e)
@@ -288,6 +287,8 @@ def app():
                     empty_text.error(
                         "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
                     )
+    with row1_col1:
+        m.to_streamlit(height=600)
 try:
     app()
 except Exception as e:
