@@ -182,8 +182,6 @@ def app():
                 st.error("Please draw another ROI and try again.")
                 return
 
-        m.to_streamlit(height=600)
-
     with row1_col2:
 
         if collection in [
@@ -280,6 +278,7 @@ def app():
 
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
                                 empty_text.error("Sentinel in progress")
+                            m.to_streamlit(height=600)
                         except Exception as e:
                             empty_text.error(
                                 "An error occurred: " + str(e)
