@@ -88,46 +88,18 @@ def app():
             "Select a satellite image collection: ",
             [
                 "Landsat TM-ETM-OLI Surface Reflectance",
-                "Sentinel-2 MSI Surface Reflectance",
-                "Any Earth Engine ImageCollection"
+                "Sentinel-2 MSI Surface Reflectance"
             ],
             index=1,
         )
 
         if collection in [
             "Landsat TM-ETM-OLI Surface Reflectance",
-            "Sentinel-2 MSI Surface Reflectance",
-            "Any Earth Engine ImageCollection"
+            "Sentinel-2 MSI Surface Reflectance"
         ]:
             roi_options = ["Uploaded GeoJSON"]
         else:
             roi_options = ["Uploaded GeoJSON"]
-
-        if collection == "Any Earth Engine ImageCollection":
-            keyword = st.text_input("Enter a keyword to search (e.g., MODIS):", "")
-            if keyword:
-
-                assets = geemap.search_ee_data(keyword)
-                ee_assets = []
-                for asset in assets:
-                    if asset["ee_id_snippet"].startswith("ee.ImageCollection"):
-                        ee_assets.append(asset)
-
-                asset_titles = [x["title"] for x in ee_assets]
-                dataset = st.selectbox("Select a dataset:", asset_titles)
-                if len(ee_assets) > 0:
-                    st.session_state["ee_assets"] = ee_assets
-                    st.session_state["asset_titles"] = asset_titles
-                    index = asset_titles.index(dataset)
-                    ee_id = ee_assets[index]["id"]
-                else:
-                    ee_id = ""
-
-                if dataset is not None:
-                    with st.expander("Show dataset details", False):
-                        index = asset_titles.index(dataset)
-                        html = geemap.ee_data_html(st.session_state["ee_assets"][index])
-                        st.markdown(html, True)
 
         sample_roi = st.selectbox(
             "Select a sample ROI or upload a GeoJSON file:",
@@ -188,11 +160,9 @@ def app():
 
             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
                 sensor_start_year = 2013
-                timelapse_title = "Landsat Index"
 
             elif collection == "Sentinel-2 MSI Surface Reflectance":
                 sensor_start_year = 2015
-                timelapse_title = "Sentinel-2 Timelapse"
 
             with st.form("submit_landsat_form"):
 
@@ -205,15 +175,6 @@ def app():
                         "NDVI",
                         "NDWI",
                         "SAVI",
-                        "NIR/SWIR1/Red",
-                        "SWIR2/NIR/Red",
-                        "SWIR2/SWIR1/Red",
-                        "SWIR1/NIR/Blue",
-                        "NIR/SWIR1/Blue",
-                        "SWIR2/NIR/Green",
-                        "SWIR1/NIR/Red",
-                        "SWIR2/NIR/SWIR1",
-                        "SWIR1/NIR/SWIR2",
                     ],
                     index=9,
                 )
@@ -279,6 +240,10 @@ def app():
                                 "An error occurred: " + str(e)
                             )
                             st.stop()
+                    m.add_layer(ndvi,
+                                {'min': -0.2, 'max': 1,
+                                 'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
+                                )        
                 else:
                     empty_text.error(
                         "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
