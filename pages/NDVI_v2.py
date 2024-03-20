@@ -1,5 +1,4 @@
 import ee
-import os
 import warnings
 import datetime
 import calendar
@@ -7,10 +6,8 @@ import fiona
 import geopandas as gpd
 import folium
 import streamlit as st
-import geemap.colormaps as cm
 import geemap.foliumap as geemap
 from datetime import date
-from shapely.geometry import Polygon
 
 st.set_page_config(layout="wide")
 warnings.filterwarnings("ignore")
@@ -238,7 +235,9 @@ def app():
                             empty_text.error("Quantidade de imagens disponíveis: " + str(count))
 
                         # Write the map object back to Streamlit to trigger an update
-    st.write(m)
+    with row1_col1:
+        m.to_streamlit(height=600)
+
 try:
     app()
 except Exception as e:
