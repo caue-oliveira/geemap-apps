@@ -266,7 +266,7 @@ def app():
                                             )
                                 count = img_collection.size().getInfo()
                                 empty_text.error("Total image available: " + str(count))
-                                download_url.text("Tot321321321321321e: " + str(count))
+                                download_url.warning("Tot321321321321321e: " + str(count))
 
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
                                 empty_text.error("Sentinel in progress")
