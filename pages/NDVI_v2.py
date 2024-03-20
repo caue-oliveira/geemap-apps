@@ -175,6 +175,15 @@ def app():
                         "NDVI",
                         "NDWI",
                         "SAVI",
+                        "NIR/SWIR1/Red",
+                        "SWIR2/NIR/Red",
+                        "SWIR2/SWIR1/Red",
+                        "SWIR1/NIR/Blue",
+                        "NIR/SWIR1/Blue",
+                        "SWIR2/NIR/Green",
+                        "SWIR1/NIR/Red",
+                        "SWIR2/NIR/SWIR1",
+                        "SWIR1/NIR/SWIR2",
                     ],
                     index=9,
                 )
@@ -240,10 +249,6 @@ def app():
                                 "An error occurred: " + str(e)
                             )
                             st.stop()
-                    m.add_layer(ndvi,
-                                {'min': -0.2, 'max': 1,
-                                 'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
-                                )        
                 else:
                     empty_text.error(
                         "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
