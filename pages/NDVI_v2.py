@@ -227,7 +227,7 @@ def app():
                             )
 
                             img_filter = img_collection.first()
-                            m.addLayer(img_filter,'img')
+                            m.addLayer(img_filter, 'img')
                             clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
                             ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
                             m.add_layer(ndvi,
@@ -237,10 +237,8 @@ def app():
                             count = img_collection.size().getInfo()
                             empty_text.error("Quantidade de imagens disponíveis: " + str(count))
 
-                        elif collection == "Sentinel-2 MSI Surface Reflectance":
-                            empty_text.error("Sentinel in progress")
-
-                    m.to_streamlit(height=600)
+                        # Write the map object back to Streamlit to trigger an update
+                        st.write(m)
 try:
     app()
 except Exception as e:
