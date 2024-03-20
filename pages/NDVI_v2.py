@@ -249,6 +249,11 @@ def app():
                                 "An error occurred: " + str(e)
                             )
                             st.stop()
+                            
+                        m.add_layer(ndvi,
+                                    {'min': -0.2, 'max': 1,
+                                     'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
+                                    )
                 else:
                     empty_text.error(
                         "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
