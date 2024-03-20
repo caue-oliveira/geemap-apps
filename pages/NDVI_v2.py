@@ -227,6 +227,7 @@ def app():
                                 img_collection = (
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
                                     .filterBounds(roi)
+                                    .filterDate(start_date, end_date)
                                     .sort('CLOUD_COVER')
                                 )
 
@@ -234,8 +235,10 @@ def app():
 
                                 clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
-                                m.addLayer(ndvi)
-
+                                m.add_layer(ndvi,
+                                            {'min': -0.2, 'max': 1,
+                                             'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
+                                            )
                                 count = img_collection.size().getInfo()
                                 empty_text.error("Quantidade de imagens disponíveis: " + str(count))
 
@@ -246,8 +249,11 @@ def app():
                                 "An error occurred: " + str(e)
                             )
                             st.stop()
-    m.to_streamlit(height=600)
 
+                else:
+                    empty_text.error(
+                        "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
+                    )
 try:
     app()
 except Exception as e:
