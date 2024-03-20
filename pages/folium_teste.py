@@ -2,6 +2,7 @@ import ee
 import os
 import warnings
 import datetime
+import calendar
 import fiona
 import geopandas as gpd
 import folium
@@ -11,30 +12,17 @@ import geemap.foliumap as geemap
 from datetime import date
 from shapely.geometry import Polygon
 
+# Setting page configurations
 st.set_page_config(layout="wide")
 warnings.filterwarnings("ignore")
 
-
 @st.cache_data
+# Authenticate into Earth Engine
 def ee_authenticate(token_name="EARTHENGINE_TOKEN"):
     geemap.ee_initialize(token_name=token_name)
 
-
-st.sidebar.info(
-    """
-    - Side bar
-    """
-)
-
-st.sidebar.title("Contact")
-st.sidebar.info(
-    """
-    Cauê Oliveira Miranda
-    [URL](https://github.com/giswqs) | [Linkedin](https://twitter.com/giswqs) | [Currículo](https://www.youtube.com/c/QiushengWu)
-    """
-)
-
 @st.cache_data
+# Function to upload my geometries
 def uploaded_file_to_gdf(data):
     import tempfile
     import os
@@ -59,8 +47,10 @@ def app():
 
     today = date.today()
 
+    # Streamlit page title
     st.title("Create Satellite Timelapse")
 
+    # Streamlit page description
     st.markdown(
         """
         An interactive web app for creating [Landsat](https://developers.google.com/earth-engine/datasets/catalog/landsat)/[GOES](https://jstnbraaten.medium.com/goes-in-earth-engine-53fbc8783c16) timelapse for any location around the globe. 
@@ -68,24 +58,38 @@ def app():
     """
     )
 
+    # Setting rows and columns
     row1_col1, row1_col2 = st.columns([2, 1])
 
+    # Default zoom
     if st.session_state.get("zoom_level") is None:
         st.session_state["zoom_level"] = 4
 
-    st.session_state["ee_asset_id"] = None
-    st.session_state["bands"] = None
-    st.session_state["palette"] = None
-    st.session_state["vis_params"] = None
+    # Earth Engine drawing method setup
+    def add_ee_layer(self, ee_image_object, vis_params, name):
+        map_id_dict = ee.Image(ee_image_object).getMapId(vis_params)
+        layer = folium.raster_layers.TileLayer(
+            tiles=map_id_dict['tile_fetcher'].url_format,
+            attr='Map Data &copy; <a href="https://earthengine.google.com/">Google Earth Engine</a>',
+            name=name,
+            overlay=True,
+            control=True
+        )
+        layer.add_to(self)
+        return layer
 
+    # Configuring Earth Engine display rendering method in Folium
+    folium.Map.add_ee_layer = add_ee_layer
+
+    # Authenticate into Earth Engine
     with row1_col1:
         ee_authenticate(token_name="EARTHENGINE_TOKEN")
-        m = geemap.Map(
-            basemap="HYBRID",
-            plugin_Draw=True,
-            Draw_export=True,
-            locate_control=True,
-            plugin_LatLngPopup=False,
+        # Map default settings
+        m = folium.Map(
+            center=[-15.7801, -47.9292],
+            zoom_start=12,
+            tiles='cartodb positron',
+            control_scale=True
         )
         m.add_basemap("ROADMAP")
 
@@ -108,46 +112,18 @@ def app():
             "Select a satellite image collection: ",
             [
                 "Landsat TM-ETM-OLI Surface Reflectance",
-                "Sentinel-2 MSI Surface Reflectance",
-                "Any Earth Engine ImageCollection"
+                "Sentinel-2 MSI Surface Reflectance"
             ],
             index=1,
         )
 
         if collection in [
             "Landsat TM-ETM-OLI Surface Reflectance",
-            "Sentinel-2 MSI Surface Reflectance",
-            "Any Earth Engine ImageCollection"
+            "Sentinel-2 MSI Surface Reflectance"
         ]:
             roi_options = ["Uploaded GeoJSON"]
         else:
             roi_options = ["Uploaded GeoJSON"]
-
-        if collection == "Any Earth Engine ImageCollection":
-            keyword = st.text_input("Enter a keyword to search (e.g., MODIS):", "")
-            if keyword:
-
-                assets = geemap.search_ee_data(keyword)
-                ee_assets = []
-                for asset in assets:
-                    if asset["ee_id_snippet"].startswith("ee.ImageCollection"):
-                        ee_assets.append(asset)
-
-                asset_titles = [x["title"] for x in ee_assets]
-                dataset = st.selectbox("Select a dataset:", asset_titles)
-                if len(ee_assets) > 0:
-                    st.session_state["ee_assets"] = ee_assets
-                    st.session_state["asset_titles"] = asset_titles
-                    index = asset_titles.index(dataset)
-                    ee_id = ee_assets[index]["id"]
-                else:
-                    ee_id = ""
-
-                if dataset is not None:
-                    with st.expander("Show dataset details", False):
-                        index = asset_titles.index(dataset)
-                        html = geemap.ee_data_html(st.session_state["ee_assets"][index])
-                        st.markdown(html, True)
 
         sample_roi = st.selectbox(
             "Select a sample ROI or upload a GeoJSON file:",
@@ -191,6 +167,7 @@ def app():
             gdf = uploaded_file_to_gdf(data)
             try:
                 st.session_state["roi"] = geemap.gdf_to_ee(gdf, geodesic=False)
+                roi = st.session_state.get("roi")
                 m.add_gdf(gdf, "ROI")
             except Exception as e:
                 st.error(e)
@@ -207,23 +184,13 @@ def app():
         ]:
 
             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
-                sensor_start_year = 1984
-                timelapse_title = "Landsat Index"
+                sensor_start_year = 2013
 
             elif collection == "Sentinel-2 MSI Surface Reflectance":
                 sensor_start_year = 2015
-                timelapse_title = "Sentinel-2 Timelapse"
 
             with st.form("submit_landsat_form"):
 
-                roi = None
-                if st.session_state.get("roi") is not None:
-                    roi = st.session_state.get("roi")
-                out_gif = geemap.temp_file_path(".gif")
-
-                title = st.text_input(
-                    "Enter a title to show on your image: ", timelapse_title
-                )
                 index_function = st.selectbox(
                     "Select an index function:",
                     [
@@ -243,110 +210,59 @@ def app():
                     index=9,
                 )
 
-                frequency = st.selectbox(
-                    "Select a temporal frequency:",
-                    ["year", "quarter", "month"],
-                    index=0,
-                )
-
-                with st.expander("Customize timelapse"):
-
-                    cloud_pixel_percentage = st.slider(
+                cloud_pixel_percentage = st.slider(
                         "Cloud Coverage 🌥️:",
                         min_value=5,
                         max_value=100,
                         step=5,
                         value=85,
                         )
-                    dimensions = st.slider(
-                        "Maximum dimensions (Width*Height) in pixels", 768, 2000, 768
-                    )
-                    progress_bar_color = st.color_picker(
-                        "Progress bar color:", "#0000ff"
-                    )
-                    years = st.slider(
+
+                years = st.slider(
                         "Start and end year:",
                         sensor_start_year,
                         today.year,
-                        (sensor_start_year, today.year),
-                    )
-                    months = st.slider("Start and end month:", 1, 12, (1, 12))
-                    font_size = st.slider("Font size:", 10, 50, 30)
-                    font_color = st.color_picker("Font color:", "#ffffff")
-                    apply_fmask = st.checkbox(
-                        "Apply fmask (remove clouds, shadows, snow)", True
-                    )
-                    font_type = st.selectbox(
-                        "Select the font type for the title:",
-                        ["arial.ttf", "alibaba.otf"],
-                        index=0,
-                    )
-                    fading = st.slider(
-                        "Fading duration (seconds) for each frame:", 0.0, 3.0, 0.0
-                    )
-                    mp4 = st.checkbox("Save timelapse as MP4", True)
 
-#### IMAGE PROCESSING INDEX
-                def getNDVI(collection):
-                    if collection == 'Landsat TM-ETM-OLI Surface Reflectance':
-                        ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
-                        return ndvi
-                    elif collection == 'Sentinel-2 MSI Surface Reflectance':
-                        return img_collection.normalizedDifference(['B8', 'B4'])
+                      (sensor_start_year, today.year),
+                    )
+                months = st.slider("Start and end month:", 1, 12, (1, 12))
 
-
- #### IMAGE PROCESSING END
-
+                start_year = years[0]
+                end_year = years[1]
+                start_month = months[0]
+                end_month = months[1]
+                start_date = f"{start_year}-{start_month:02d}-01"
+                end_date = f"{end_year}-{end_month:02d}-{calendar.monthrange(end_year, end_month)[1]}"
                 empty_text = st.empty()
-                empty_image = st.empty()
-                empty_fire_image = st.empty()
-                empty_video = st.container()
                 submitted = st.form_submit_button("Submit")
-                if submitted:
 
+                if submitted:
                     if sample_roi == "Uploaded GeoJSON" and data is None:
                         empty_text.warning(
                             "Steps to create a timelapse: Draw a rectangle on the map -> Export it as a GeoJSON -> Upload it back to the app -> Click the Submit button. Alternatively, you can select a sample ROI from the dropdown list."
                         )
                     else:
-
-                        empty_text.text("Computing... Please wait...")
-
-                        start_date = str(months[0]).zfill(2) + "-01"
-                        end_date = str(months[1]).zfill(2) + "-30"
-
-                        try:
-                            if collection == "Landsat TM-ETM-OLI Surface Reflectance":
-                                img_collection = (
-                                    ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
-                                    .filterBounds(sample_roi)
-                                    .filterDate(start_date, end_date)
-                                    .sort(ee.Filter.lt('CLOUD_COVER', cloud_pixel_percentage))
-                                )
-
-                                img_filter = img_collection.first()
-
-                                clip_sr_img = img_filter.clip(sample_roi).multiply(0.0000275).add(-0.2)
-                                ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
-                                m.add_layer(ndvi,
-                                            {'min': -0.2, 'max': 1,
-                                             'palette': ['B62F02', 'D87B32','FCF40D','62C41C','0A5C1C']},'NDVI'
-                                )
-                                m.to_streamlit(height=700)
-
-                            elif collection == "Sentinel-2 MSI Surface Reflectance":
-                                out_gif = geemap.sentinel2_timelapse(
-                                    roi=roi,
-                                )
-                        except:
-                            empty_text.error(
-                                "An error occurred while computing the timelapse. Your probably requested too much data. Try reducing the ROI or timespan."
+                        if collection == "Landsat TM-ETM-OLI Surface Reflectance":
+                            img_collection = (
+                                ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
+                                .filterBounds(roi)
+                                .filterDate(start_date, end_date)
+                                .sort('CLOUD_COVER')
                             )
-                            st.stop()
-                        else:
-                            empty_text.error(
-                                "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
-                            )
+
+                            img_filter = img_collection.first()
+                            m.addLayer(img_filter, 'img')
+                            clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
+                            ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
+                            m.add_layer(ndvi,
+                                        {'min': -0.2, 'max': 1,
+                                         'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
+                                        )
+                            count = img_collection.size().getInfo()
+                            empty_text.error("Quantidade de imagens disponíveis: " + str(count))
+
+                        # Write the map object back to Streamlit to trigger an update
+    st.write(m)
 try:
     app()
 except Exception as e:
