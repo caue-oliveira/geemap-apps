@@ -203,48 +203,44 @@ def app():
                     )
                 months = st.slider("Start and end month:", 1, 12, (1, 12))
 
+                start_year = years[0]
+                end_year = years[1]
+                start_month = months[0]
+                end_month = months[1]
+                start_date = f"{start_year}-{start_month:02d}-01"
+                end_date = f"{end_year}-{end_month:02d}-{calendar.monthrange(end_year, end_month)[1]}"
                 empty_text = st.empty()
                 submitted = st.form_submit_button("Submit")
+
                 if submitted:
                     if sample_roi == "Uploaded GeoJSON" and data is None:
                         empty_text.warning(
                             "Steps to create a timelapse: Draw a rectangle on the map -> Export it as a GeoJSON -> Upload it back to the app -> Click the Submit button. Alternatively, you can select a sample ROI from the dropdown list."
                         )
                     else:
-                        try:
-                            start_year = years[0]
-                            end_year = years[1]
-                            start_month = months[0]
-                            end_month = months[1]
-                            start_date = f"{start_year}-{start_month:02d}-01"
-                            end_date = f"{end_year}-{end_month:02d}-{calendar.monthrange(end_year, end_month)[1]}"
-
-                            if collection == "Landsat TM-ETM-OLI Surface Reflectance":
-                                img_collection = (
-                                    ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
-                                    .filterBounds(roi)
-                                    .filterDate(start_date, end_date)
-                                    .sort('CLOUD_COVER')
-                                )
-
-                                img_filter = img_collection.first()
-                                m.addLayer(img_filter,'img')
-                                clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
-                                ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
-                                m.add_layer(ndvi,
-                                            {'min': -0.2, 'max': 1,
-                                             'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
-                                            )
-                                count = img_collection.size().getInfo()
-                                empty_text.error("Quantidade de imagens disponíveis: " + str(count))
-
-                            elif collection == "Sentinel-2 MSI Surface Reflectance":
-                                empty_text.error("Sentinel in progress")
-                        except Exception as e:
-                            empty_text.error(
-                                "An error occurred: " + str(e)
+                        if collection == "Landsat TM-ETM-OLI Surface Reflectance":
+                            img_collection = (
+                                ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
+                                .filterBounds(roi)
+                                .filterDate(start_date, end_date)
+                                .sort('CLOUD_COVER')
                             )
-                            m.to_streamlit(height=600)
+
+                            img_filter = img_collection.first()
+                            m.addLayer(img_filter,'img')
+                            clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
+                            ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
+                            m.add_layer(ndvi,
+                                        {'min': -0.2, 'max': 1,
+                                         'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
+                                        )
+                            count = img_collection.size().getInfo()
+                            empty_text.error("Quantidade de imagens disponíveis: " + str(count))
+
+                        elif collection == "Sentinel-2 MSI Surface Reflectance":
+                            empty_text.error("Sentinel in progress")
+
+                    m.to_streamlit(height=600)
 try:
     app()
 except Exception as e:
