@@ -226,14 +226,14 @@ def app():
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
                                 img_collection = (
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
-                                    .filterBounds(roi)
+                                    .filterBounds(data)
                                     .filterDate(start_date, end_date)
                                     .sort('CLOUD_COVER')
                                 )
 
                                 img_filter = img_collection.first()
 
-                                clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
+                                clip_sr_img = img_filter.clip(data).multiply(0.0000275).add(-0.2)
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
                                 m.add_layer(ndvi,
                                             {'min': -0.2, 'max': 1,
@@ -250,10 +250,6 @@ def app():
                             )
                             st.stop()
 
-                else:
-                    empty_text.error(
-                        "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
-                    )
 try:
     app()
 except Exception as e:
