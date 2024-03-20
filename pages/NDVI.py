@@ -253,6 +253,7 @@ def app():
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
                                     .filterBounds(roi)
                                     .filterDate(start_date, end_date)
+                                    .filter(ee.Filter.lt('CLOUD_COVER', cloud_pixel_percentage))
                                     .sort('CLOUD_COVER')
                                 )
 
@@ -273,10 +274,10 @@ def app():
 
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
                                 img_collection = (
-                                    ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
+                                    ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED")
                                     .filterBounds(roi)
                                     .filterDate(start_date, end_date)
-                                    .sort('CLOUD_COVER')
+                                    .sort('CLOUDY_PIXEL_PERCENTAGE')
                                 )
 
                                 img_filter = img_collection.first()
