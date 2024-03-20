@@ -40,7 +40,6 @@ def uploaded_file_to_gdf(data):
 
     return gdf
 
-def app():
 
     today = date.today()
 
@@ -258,7 +257,3 @@ def app():
                     empty_text.error(
                         "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
                     )
-try:
-    app()
-except Exception as e:
-    pass
