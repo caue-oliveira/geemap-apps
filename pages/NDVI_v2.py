@@ -186,9 +186,7 @@ def app():
                     index=9,
                 )
 
-                with st.expander("Customize options"):
-
-                    cloud_pixel_percentage = st.slider(
+                cloud_pixel_percentage = st.slider(
                         "Cloud Coverage 🌥️:",
                         min_value=5,
                         max_value=100,
@@ -196,14 +194,14 @@ def app():
                         value=85,
                         )
 
-                    years = st.slider(
+                years = st.slider(
                         "Start and end year:",
                         sensor_start_year,
                         today.year,
 
                       (sensor_start_year, today.year),
                     )
-                    months = st.slider("Start and end month:", 1, 12, (1, 12))
+                months = st.slider("Start and end month:", 1, 12, (1, 12))
 
                 empty_text = st.empty()
                 submitted = st.form_submit_button("Submit")
@@ -230,7 +228,7 @@ def app():
                                 )
 
                                 img_filter = img_collection.first()
-                                m.addLayer(img_filter)
+                                m.addLayer(img_filter,'img')
                                 clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
                                 m.add_layer(ndvi,
