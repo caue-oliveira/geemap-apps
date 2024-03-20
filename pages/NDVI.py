@@ -277,19 +277,21 @@ def app():
                                     ee.ImageCollection("COPERNICUS/S2_SR_HARMONIZED")
                                     .filterBounds(roi)
                                     .filterDate(start_date, end_date)
+                                    .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', cloud_pixel_percentage))
                                     .sort('CLOUDY_PIXEL_PERCENTAGE')
                                 )
 
                                 img_filter = img_collection.first()
 
-                                clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
-                                ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
+                                clip_sr_img = img_filter.clip(roi).multiply(0.0001)
+                                ndvi = clip_sr_img.normalizedDifference(['B8', 'B4'])
                                 m.add_layer(ndvi,
                                             {'min': -0.2, 'max': 1,
                                              'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
                                             )
                                 count = img_collection.size().getInfo()
                                 empty_text.error("Total image available: " + str(count))
+                                
                         except Exception as e:
                             empty_text.error(
                                 "An error occurred: " + str(e)
