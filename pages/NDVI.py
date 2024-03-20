@@ -257,7 +257,7 @@ def app():
                                     .sort('CLOUD_COVER')
                                 )
 
-                                img_filter = img_collection.first()
+                                img_filter = img_collection.filterBounds()
 
                                 clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
@@ -281,7 +281,7 @@ def app():
                                     .sort('CLOUDY_PIXEL_PERCENTAGE')
                                 )
 
-                                img_filter = img_collection.first()
+                                img_filter = img_collection.filterBounds(roi)
 
                                 clip_sr_img = img_filter.clip(roi).multiply(0.0001)
                                 ndvi = clip_sr_img.normalizedDifference(['B8', 'B4'])
@@ -291,7 +291,7 @@ def app():
                                             )
                                 count = img_collection.size().getInfo()
                                 empty_text.error("Total image available: " + str(count))
-                                
+
                         except Exception as e:
                             empty_text.error(
                                 "An error occurred: " + str(e)
