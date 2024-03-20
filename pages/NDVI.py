@@ -275,7 +275,7 @@ def app():
                                     .filterBounds(roi)
                                     .filterDate(start_date, end_date)
                                     .filter(ee.Filter.lt('CLOUDY_PIXEL_PERCENTAGE', cloud_pixel_percentage))
-                                    .sort('CLOUDY_PIXEL_PERCENTAGE')
+                                    .sort('system:time_start')
                                 )
 
                                 img_filter = img_collection.mosaic()
