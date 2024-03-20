@@ -233,7 +233,7 @@ def app():
 
                 empty_text = st.empty()
                 submitted = st.form_submit_button("Submit")
-                download_url = st.empty()
+
                 if submitted:
                     if sample_roi == "Uploaded GeoJSON" and data is None:
                         empty_text.warning(
@@ -264,13 +264,28 @@ def app():
                                             {'min': -0.2, 'max': 1,
                                              'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
                                             )
+                                m.add_layer(img_filter)
                                 count = img_collection.size().getInfo()
                                 empty_text.error("Total image available: " + str(count))
-                                ndvi_url = ndvi.getDownloadURL()
-                                download_url.warning(f'Download: {ndvi_url}')
 
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
-                                empty_text.error("Sentinel in progress")
+                                img_collection = (
+                                    ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
+                                    .filterBounds(roi)
+                                    .filterDate(start_date, end_date)
+                                    .sort('CLOUD_COVER')
+                                )
+
+                                img_filter = img_collection.first()
+
+                                clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
+                                ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
+                                m.add_layer(ndvi,
+                                            {'min': -0.2, 'max': 1,
+                                             'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
+                                            )
+                                count = img_collection.size().getInfo()
+                                empty_text.error("Total image available: " + str(count))
                         except Exception as e:
                             empty_text.error(
                                 "An error occurred: " + str(e)
