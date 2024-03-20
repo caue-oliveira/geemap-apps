@@ -294,10 +294,7 @@ def app():
                                 "An error occurred: " + str(e)
                             )
                             st.stop()
-                else:
-                    empty_text.error(
-                        "Something went wrong. You probably requested too much data. Try reducing the ROI or timespan."
-                    )
+
     with row1_col1:
         m.to_streamlit(height=600)
 try:
