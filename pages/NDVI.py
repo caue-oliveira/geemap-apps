@@ -257,7 +257,7 @@ def app():
                                     .sort('CLOUD_COVER')
                                 )
 
-                                img_filter = img_collection.first()
+                                img_filter = img_collection.mosaic()
 
                                 clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
