@@ -263,7 +263,7 @@ def app():
                                 m.add_layer(img_filter,
                                             {'bands': ['SR_B4', 'SR_B3', 'SR_B2'],
                                                   'min': 0,
-                                                  'max': 3000
+                                                  'max': 1
                                                 })
                                 m.add_layer(ndvi,
                                             {'min': -0.2, 'max': 1,
