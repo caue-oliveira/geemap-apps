@@ -251,12 +251,13 @@ def app():
                             if collection == "Landsat TM-ETM-OLI Surface Reflectance":
                                 img_collection = (
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
+                                    .filterBounds(roi)
                                     .filterDate(start_date, end_date)
                                     .filter(ee.Filter.lt('CLOUD_COVER', cloud_pixel_percentage))
                                     .sort('CLOUD_COVER')
                                 )
-                                img_bounds =  img_collection.filterBounds(roi)
-                                img_filter = img_bounds.first()
+
+                                img_filter = img_collection.first()
 
                                 clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
@@ -280,7 +281,7 @@ def app():
                                     .sort('CLOUDY_PIXEL_PERCENTAGE')
                                 )
 
-                                img_filter = img_collection.filterBounds(roi)
+                                img_filter = img_collection.first()
 
                                 clip_sr_img = img_filter.clip(roi).multiply(0.0001)
                                 ndvi = clip_sr_img.normalizedDifference(['B8', 'B4'])
