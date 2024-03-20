@@ -63,7 +63,7 @@ def app():
             locate_control=True,
             plugin_LatLngPopup=False,
         )
-        m.add_basemap("HYBRID")
+        m.add_basemap("ROADMAP")
 
     with row1_col2:
 
@@ -264,7 +264,8 @@ def app():
                                              'palette': ['B62F02', 'D87B32', 'FCF40D', '62C41C', '0A5C1C']}, 'NDVI'
                                             )
                                 count = img_collection.size().getInfo()
-                                empty_text.error("Quantidade de imagens na coleção: " + str(count))
+                                empty_text.error("Total image available: " + str(count))
+                                empty_text.error("Tot321321321321321e: " + str(count))
 
                             elif collection == "Sentinel-2 MSI Surface Reflectance":
                                 empty_text.error("Sentinel in progress")
