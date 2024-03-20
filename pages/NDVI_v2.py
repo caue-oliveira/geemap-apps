@@ -238,7 +238,7 @@ def app():
                             empty_text.error("Quantidade de imagens disponíveis: " + str(count))
 
                         # Write the map object back to Streamlit to trigger an update
-                        st.write(m)
+    st.write(m)
 try:
     app()
 except Exception as e:
