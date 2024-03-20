@@ -1,16 +1,12 @@
 import ee
-import os
 import warnings
-import datetime
 import calendar
 import fiona
 import geopandas as gpd
 import folium
 import streamlit as st
-import geemap.colormaps as cm
 import geemap.foliumap as geemap
 from datetime import date
-from shapely.geometry import Polygon
 
 st.set_page_config(layout="wide")
 warnings.filterwarnings("ignore")
@@ -58,11 +54,6 @@ def app():
     if st.session_state.get("zoom_level") is None:
         st.session_state["zoom_level"] = 4
 
-    st.session_state["ee_asset_id"] = None
-    st.session_state["bands"] = None
-    st.session_state["palette"] = None
-    st.session_state["vis_params"] = None
-
     with row1_col1:
         ee_authenticate(token_name="EARTHENGINE_TOKEN")
         m = geemap.Map(
@@ -72,7 +63,7 @@ def app():
             locate_control=True,
             plugin_LatLngPopup=False,
         )
-        m.add_basemap("ROADMAP")
+        m.add_basemap("HYBRID")
 
     with row1_col2:
 
