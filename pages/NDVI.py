@@ -261,7 +261,7 @@ def app():
                                 clip_sr_img = img_filter.clip(roi).multiply(0.0000275).add(-0.2)
                                 ndvi = clip_sr_img.normalizedDifference(['SR_B5', 'SR_B4'])
                                 m.add_layer(img_filter,
-                                            {'bands': ['SR_B4', 'SR_B3', 'SR_B2'], 'alfa':1,
+                                            {'bands': ['SR_B4', 'SR_B3', 'SR_B2'], 'gamma':1,
                                                 })
                                 m.add_layer(ndvi,
                                             {'min': -0.2, 'max': 1,
