@@ -22,4 +22,14 @@ st.sidebar.info(
 
 st.title("Marker Cluster")
 
-gdf = gpd.read_file('unidades.zip')
+# Download the shp from github
+unds = '../unidades.zip'
+
+
+gdf = gpd.read_file(unds)
+gdf_filter = gdf [['Nome', 'Sigla', 'Unidade', 'DominioEst', 'geometry']].fillna(0)
+gdf_filter = gdf_filter.to_crs(epsg=4326)
+
+folium.LayerControl().add_to(m)
+m = gdf_filter.explore(column='Sigla', name = 'Sigla')
+m
