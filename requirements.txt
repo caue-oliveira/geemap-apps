@@ -4,3 +4,4 @@ fiona
 geopandas
 ee
 folium
+leafmap
