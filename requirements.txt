@@ -5,3 +5,5 @@ geopandas
 ee
 folium
 leafmap
+fiona
+GDAL
