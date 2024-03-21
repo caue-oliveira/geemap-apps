@@ -1,48 +1,64 @@
-import ee
 import streamlit as st
-import geemap.foliumap as geemap
+import leafmap.foliumap as leafmap
 
-# Get an NLCD image by year.
-def getNLCD(year):
-    # Import the NLCD collection.
-    dataset = ee.ImageCollection("USGS/NLCD_RELEASES/2019_REL/NLCD")
+st.set_page_config(layout="wide")
 
-    # Filter the collection by year.
-    nlcd = dataset.filter(ee.Filter.eq("system:index", year)).first()
+st.sidebar.info(
+    """
+    - Web App URL: <https://streamlit.geemap.org>
+    - GitHub repository: <https://github.com/giswqs/streamlit-geospatial>
+    """
+)
 
-    # Select the land cover band.
-    landcover = nlcd.select("landcover")
-    return landcover
+st.sidebar.title("Contact")
+st.sidebar.info(
+    """
+    Qiusheng Wu: <https://wetlands.io>
+    [GitHub](https://github.com/giswqs) | [Twitter](https://twitter.com/giswqs) | [YouTube](https://www.youtube.com/c/QiushengWu) | [LinkedIn](https://www.linkedin.com/in/qiushengwu)
+    """
+)
 
 
-st.header("National Land Cover Database (NLCD)")
+def app():
+    st.title("Search Basemaps")
+    st.markdown(
+        """
+    This app is a demonstration of searching and loading basemaps from [xyzservices](https://github.com/geopandas/xyzservices) and [Quick Map Services (QMS)](https://github.com/nextgis/quickmapservices). Selecting from 1000+ basemaps with a few clicks.  
+    """
+    )
 
-# Create a layout containing two columns, one for the map and one for the layer dropdown list.
-row1_col1, row1_col2 = st.columns([3, 1])
+    with st.expander("See demo"):
+        st.image("https://i.imgur.com/0SkUhZh.gif")
 
-# Create an interactive map
-Map = geemap.Map(center=[40, -100], zoom=4)
+    row1_col1, row1_col2 = st.columns([3, 1])
+    width = 800
+    height = 600
+    tiles = None
 
-# Select the seven NLCD epochs after 2000.
-years = ["2001", "2004", "2006", "2008", "2011", "2013", "2016", "2019"]
+    with row1_col2:
 
-# Add a dropdown list and checkbox to the second column.
-with row1_col2:
-    selected_year = st.multiselect("Select a year", years)
-    add_legend = st.checkbox("Show legend")
+        checkbox = st.checkbox("Search Quick Map Services (QMS)")
+        keyword = st.text_input("Enter a keyword to search and press Enter:")
+        empty = st.empty()
 
-# Add selected NLCD image to the map based on the selected year.
-if selected_year:
-    for year in selected_year:
-        Map.addLayer(getNLCD(year), {}, "NLCD " + year)
+        if keyword:
+            options = leafmap.search_xyz_services(keyword=keyword)
+            if checkbox:
+                qms = leafmap.search_qms(keyword=keyword)
+                if qms is not None:
+                    options = options + qms
 
-    if add_legend:
-        Map.add_legend(
-            title="NLCD Land Cover Classification", builtin_legend="NLCD"
-        )
-    with row1_col1:
-        Map.to_streamlit(height=600)
+            tiles = empty.multiselect(
+                "Select XYZ tiles to add to the map:", options)
 
-else:
-    with row1_col1:
-        Map.to_streamlit(height=600)
+        with row1_col1:
+            m = leafmap.Map()
+
+            if tiles is not None:
+                for tile in tiles:
+                    m.add_xyz_service(tile)
+
+            m.to_streamlit(height=height)
+
+
+app()

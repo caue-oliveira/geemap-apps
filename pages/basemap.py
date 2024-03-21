@@ -1,11 +1,12 @@
 import streamlit as st
 import geemap.foliumap as geemap
+import geopandas as gpd
 
 st.title("Interactive Map")
 
 col1, col2 = st.columns([4, 1])
 options = list(geemap.basemaps.keys())
-index = options.index("OpenTopoMap")
+index = options.index("Hybrid")
 
 with col2:
 
