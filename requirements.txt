@@ -6,4 +6,3 @@ ee
 folium
 leafmap
 fiona
-GDAL
