@@ -58,7 +58,7 @@ def app():
         """
 Este web app interativo tem como objetivo criar índices de vegetação a partir de imagens dos satélites Landsat 8 e Sentinel 2. 
 Atualmente, o aplicativo está em fase de desenvolvimento e oferece a capacidade de realizar análises de índices, estando
- apenas disponível Índice de Vegetação por Diferença Normalizada (NDVI).  \n
+ apenas disponível o Índice de Vegetação por Diferença Normalizada (NDVI).  \n
 O aplicativo permite fazer análises personalizadas, com filtros cobertura de nuvem e data. Os resultados são feitos por mosaicagem das imagens contidas dentro da geometria importada.
 Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usuários realizarem rápidas análises para o monitoramento de vegetação em diversas regiões de forma automatizada. 
          """
