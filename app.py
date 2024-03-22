@@ -17,7 +17,7 @@ logo = "data/SGRS_LG.png"
 st.sidebar.image(logo)
 
 # Customize page title
-st.title("Portfólio de Cauê Oliveira")
+st.title("Portfolio de Cauê Oliveira")
 
 st.markdown(
     """
