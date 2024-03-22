@@ -36,7 +36,8 @@ colors = {
     'Complexo Alcalino, Nefelinitos': '#D5EEB4',  # Cor para 'JKλian'
     'Complexo Alcalino, Gabros Alcalinos': '#F3F802',  # Cor para 'JKλiaga'
     'Complexo Alcalino, Subvulcânicas': '#14E8C3',  # Cor para 'JKλiasv'
-    'Complexo Alcalino, Ijolitos e melteigitos': '#128BB3',  # Cor para 'JKλiaop'
+    'Complexo Alcalino, Ijolitos e melteigitos': '#128BB3',  # Cor para 'JKλiaop',
+    'Complexo Alcalino, Diques de basanito e fonolito': '#128BB3',
     'Formação Furnas': '#EFA10B',  # Cor para 'D1f'
     'Formação Ponta Grossa': '#F3B26B',  # Cor para 'Dpg'
     'Granito Serra do Iran, Diorito': '#E41C50',  # Cor para 'NP3γsnird'
@@ -46,25 +47,32 @@ colors = {
     'Granito Serra do Iran, Sienogranito Grosso': '#B60D12',  # Cor para 'NP3γsnirsg'
     'Granito Serra do Iran, Tonalito': '#E41C50',  # Cor para 'NP3γsnirt'
     'Granito Serra do Iran, Granodiorito': '#BEA387',  # Cor para 'NP3γsnirgr'
+    'Granito Rio Caiapó, Granito Equigranular Fino': '#FC555A',
+    'Granito Rio Caiapó, Granito Porfirítico Grosso': '#D65355',
+    'Córrego do Horácio': '#A9C1C4',
     'Granito Serra do Tatu': '#F5CBB6',  # Cor para 'NP2γst'
     'Ribeirão Água Limpa, Granito fino': '#E7A5AE',  # Cor para 'NP2aγalgf'
     'Ribeirão Água Limpa, Granito': '#FC555A',  # Cor para 'NP2aγalg'
+    'Ribeirão Água Limpa, Granito Milonítico': '#FC555A',
     'Ribeirão Água Limpa, Hb Bt Tonalito': '#623184',  # Cor para 'NP2aγalhbt'
-    'Gnaisse Arenópolis, Anfibolito': '#623184',  # Cor para 'NP1γnaa'
+    'Gnaisse Arenópolis, Anfibolito': '331549',  # Cor para 'NP1γnaa
+    'Gnaisse Arenópolis, Gnaisse Granítico': '#B282BF',
     'Gnaisse Arenópolis, Ultramáfica': '#546087',  # Cor para 'NP1γnaum'
     'Gnaisse Arenópolis, Gnaisse Tonalítico': '#9364C0',  # Cor para 'NP1γnagt'
+    'Gnaisse Arenópolis, Calcissilicática': '#ED94EC',
     'Córrego da Onça, Qz-Msc-Xisto': '#BEE96E',  # Cor para 'NP1apox'
-    'NP1apocc': '#ED94EC',  # Cor para 'NP1apocc'
-    'NP1apoch': '#6D8232',  # Cor para 'NP1apoch'
-    'NP1apoum': '#10401E',  # Cor para 'NP1apoum'
-    'NP1apaum': '#35441C',  # Cor para 'NP1apaum'
-    'NP1apaa': '#6D8232',  # Cor para 'NP1apaa'
-    'NP1apoa': '#315144',  # Cor para 'NP1apoa'
-    'NP1apax': '#BFEF4F',  # Cor para 'NP1apax'
-    'NP1αch': '#C2C2C1',  # Cor para 'NP1αch'
-    'NP1apach': '#9900ff',  # Cor para 'NP1apach'
-    'NP1δmb': '#5CCEAC',  # Cor para 'NP1δmb'
-    'PP3γr': '#990099',  # Cor para 'PP3γr'
+    'Córrego da Onça, Calcissilicática': '#0288E8',  # Cor para 'NP1apocc'
+    'Córrego da Onça, Chert': '#6D8232',  # Cor para 'NP1apoch'
+    'Córrego da Onça, Ultramáfica': '#10401E',  # Cor para 'NP1apoum'
+    'Córrego da Onça, Anfibolito': '#315144',  # Cor para 'NP1apoa'
+    'Córrego do Santo Antônio, Qz-Msc Xisto': '#BFEF4F',  # Cor para 'NP1apax'
+    'Córrego do Santo Antônio, Metaultramáfica': '#35441C',  # Cor para 'NP1apaum'
+    'Córrego do Santo Antônio, Anfibolito': '#6D8232',  # Cor para 'NP1apaa'
+    'Córrego do Santo Antônio, Mármore': '#2CB2BF',
+    'Córrego do Santo Antônio, Quartzito': '#4AC209',
+    'Córrego do Santo Antônio, Chert': '#9900ff',  # Cor para 'NP1apach'
+    'Morro do Baú, Gabro': '#5CCEAC',  # Cor para 'NP1δmb'
+    'Gnaisse Ribeirão': '#990099',  # Cor para 'PP3γr'
 }
 
 def color_by_sigla(feature):
