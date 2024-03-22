@@ -94,7 +94,7 @@ tooltip = folium.GeoJsonTooltip(
     max_width=800,
 )
 
-folium.GeoJson(unds, style_function=color_by_sigla, tooltip=tooltip).add_to(m)
+folium.GeoJson(unds, name= 'Mapa Geológico', style_function=color_by_sigla, tooltip=tooltip).add_to(m)
 
 
 # call to render Folium map in Streamlit, but don't get any data back
