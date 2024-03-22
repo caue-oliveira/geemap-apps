@@ -1,6 +1,7 @@
 import streamlit as st
 import folium
 from streamlit_folium import st_folium
+import branca
 from branca.element import Template, MacroElement
 
 unds = ('data/unidades.geojson')
@@ -102,7 +103,7 @@ tooltip = folium.GeoJsonTooltip(
 folium.GeoJson(unds, name= 'Mapa Geológico', style_function=color_by_sigla, tooltip=tooltip).add_to(m)
 
 # Definindo o template da legenda
-legend_template = """
+legend_html = """
 {% macro html(this, kwargs) %}
 <div id='maplegend' class='maplegend' 
     style='position: absolute; z-index: 9999; background-color: rgba(255, 255, 255, 0.5);
@@ -125,11 +126,12 @@ legend_template = """
 """
 
 # Renderizando o HTML da legenda com base no template e nas cores
-legend_html = Template(legend_template).render(categories=colors)
-# Adicionando a legenda ao mapa
+legend = branca.element.MacroElement()
+legend._template = branca.element.Template(legend_html)
+
 macro = MacroElement()
 macro._template = Template(legend_html)
-m.get_root().add_child(macro)
+m.get_root().add_child(legend)
 
 folium.LayerControl().add_to(m)
 st_folium(m, width=1000, returned_objects=[])

@@ -5,3 +5,4 @@ geopandas
 ee
 folium
 streamlit-folium
+branca
