@@ -125,7 +125,7 @@ legend_template = """
 # Renderizando o HTML da legenda com base no template e nas cores
 legend_html = Template(legend_template).render(categories=colors)
 m.get_root().html.add_child(folium.Element(legend_html))
-# call to render Folium map in Streamlit, but don't get any data back
-# from the map (so that it won't rerun the app when the user interacts)
+
+
 folium.LayerControl().add_to(m)
 st_folium(m, width=1000, returned_objects=[])
