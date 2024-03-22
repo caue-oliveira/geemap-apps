@@ -1,5 +1,4 @@
 import streamlit as st
-import geopandas as gpd
 import folium
 
 st.set_page_config(layout="wide")
@@ -21,16 +20,11 @@ st.sidebar.info(
 
 st.title("Mapa Geológico do Projeto Arenópolis - TF 2023 UnB")
 
-unds = 'data/unidades.geojson'
+unds = ('data/unidades.geojson')
 
-
-
-# Calcula o centroide médio para posicionar o mapa
-centroid_lat = unds.centroid.y.mean()
-centroid_lon = unds.centroid.x.mean()
 
 # Inicializa um mapa Folium
-m = folium.Map(location=[centroid_lat, centroid_lon], zoom_start=5)
+m = folium.Map(location=[-16.39374927779391, -51.663956293293964], zoom_start=5)
 
 # Adiciona o GeoDataFrame como GeoJson ao mapa
 folium.GeoJson(unds).add_to(m)
