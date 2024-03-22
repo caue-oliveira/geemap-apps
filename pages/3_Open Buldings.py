@@ -15,3 +15,10 @@ logo = "data/SGRS_LG.png"
 st.sidebar.image(logo)
 
 st.title("Web App Google Earth Engine - Open Buildings V3")
+st.markdown('''
+Esta aplicação web foi desenvolvida em JavaScript dentro do editor de código do Google Earth Engine para análise urbana.
+ Utilizando dados do Open Buildings V3, ela calcula o número de edifícios dentro de uma área definida pelo usuário.\n
+A ferramenta considera apenas construções com confiabilidade acima de 70%. Os usuários têm a opção de exportar os dados 
+nos formatos SHP ou KML, proporcionando maior versatilidade na análise e utilização das informações disponíveis.\n
+Para acessar o aplicativo, clique aqui:[ Open Buildings Web App]
+''')
