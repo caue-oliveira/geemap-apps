@@ -31,3 +31,5 @@ def app():
 
     # Exibe o mapa no Streamlit
     m.to_streamlit(height=700)
+
+app()
