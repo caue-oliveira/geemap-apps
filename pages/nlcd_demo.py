@@ -28,7 +28,7 @@ unds = 'data/unidades.geojson'
 # Calcula o centroide médio para posicionar o mapa
 centroid_lat = gdf_filter.centroid.y.mean()
 centroid_lon = gdf_filter.centroid.x.mean()
-'''
+
 # Inicializa um mapa Folium
 m = folium.Map(location=[centroid_lat, centroid_lon], zoom_start=5)
 
