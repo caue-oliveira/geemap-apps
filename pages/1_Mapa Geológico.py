@@ -33,11 +33,12 @@ st.markdown(
 )
 # Page config ENDS
 
-# center on Liberty Bell, add marker
+# Map config STARTS
 m = folium.Map(location=[-16.39374927779391, -51.663956293293964], tiles= 'openstreetmap', zoom_start=11)
 folium.TileLayer('OpenTopoMap').add_to(m)
 folium.TileLayer('Esri.WorldImagery').add_to(m)
 
+# Dicionário de cores para cada unidade geológica presente
 colors = {
     'Complexo Alcalino, Nefelinitos': '#D5EEB4',  # Cor para 'JKλian'
     'Complexo Alcalino, Gabros Alcalinos': '#F3F802',  # Cor para 'JKλiaga'
@@ -85,17 +86,19 @@ colors = {
     'Gnaisse Ribeirão': '#990099',  # Cor para 'PP3γr'
 }
 
+# Função do estilo das geometrias com base na sigla
 def color_by_sigla(feature):
     sigla = feature['properties'].get('Nome', '')  # Obtém o valor da propriedade 'Sigla', ou uma string vazia se não existir
     return {
-        'stroke': False,
-        'fillColor': colors.get(sigla, '#ffffff'),
-        'fillOpacity': 0.8
+        'stroke': False, # Linha de contorno = Falso
+        'fillColor': colors.get(sigla, '#ffffff'), # Define as cores com base na sigla
+        'fillOpacity': 0.8 # Opacidade do fill
     }
 
+# Tooltip ao passar o mouse
 tooltip = folium.GeoJsonTooltip(
-    fields=["Nome", "Sigla", "Unidade", 'DominioEst'],
-    aliases=["Nome: ", "Sigla: ", "Unidade Geológica: ", 'Domínio Estrutural: '],
+    fields=["Nome", "Sigla", "Unidade", 'DominioEst'], # Parâmetros desejados
+    aliases=["Nome: ", "Sigla: ", "Unidade Geológica: ", 'Domínio Estrutural: '], # Nome que vai aparecer
     localize=True,
     sticky=False,
     labels=True,
@@ -108,6 +111,7 @@ tooltip = folium.GeoJsonTooltip(
     max_width=800,
 )
 
+# Adiciona a geometria GeoJson ao mapa
 folium.GeoJson(unds, name= 'Mapa Geológico', style_function=color_by_sigla, tooltip=tooltip).add_to(m)
 
 # Definindo o HTML da legenda
@@ -192,8 +196,7 @@ legend_template = """
 # Add the legend to the map
 macro = MacroElement()
 macro._template = Template(legend_template)
-m.get_root().add_child(macro)
+m.get_root().add_child(macro) # Add a legenda ao mapa
 
-
-folium.LayerControl().add_to(m)
-st_folium(m, width=1000)
+folium.LayerControl().add_to(m) # Add o controle de layers
+st_folium(m, width=1000) # Mapa ao streamlit
