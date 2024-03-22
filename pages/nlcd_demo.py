@@ -102,36 +102,30 @@ tooltip = folium.GeoJsonTooltip(
 
 folium.GeoJson(unds, name= 'Mapa Geológico', style_function=color_by_sigla, tooltip=tooltip).add_to(m)
 
-# Definindo o template da legenda
+# Definindo o HTML da legenda
 legend_html = """
-{% macro html(this, kwargs) %}
-<div id='maplegend' class='maplegend' 
-    style='position: absolute; z-index: 9999; background-color: rgba(255, 255, 255, 0.5);
-     border-radius: 6px; padding: 10px; font-size: 10.5px; right: 20px; top: 20px;'>     
-<div class='legend-title'>Geological Legend</div>
-<div class='legend-scale'>
-  <ul class='legend-labels'>
-    {% for category, color in categories.items() %}
-    <li><span style='background: {{ color }}; opacity: 0.75;'></span>{{ category }}</li>
-    {% endfor %}
-  </ul>
+<div style="
+    position: fixed; 
+    bottom: 50px; 
+    left: 50px; 
+    width: 220px; 
+    height: 220px; 
+    border:2px solid grey; 
+    z-index:9999; 
+    font-size:14px;
+    background-color: white;
+    opacity: 0.8;
+    ">
+    <p style="text-align:center; font-weight:bold">Geological Legend</p>
+    <p><span style='background:#D5EEB4;opacity:0.75;'></span> Complexo Alcalino, Nefelinitos</p>
+    <p><span style='background:#F3F802;opacity:0.75;'></span> Complexo Alcalino, Gabros Alcalinos</p>
+    <p><span style='background:#14E8C3;opacity:0.75;'></span> Complexo Alcalino, Subvulcânicas</p>
+    <!-- Adicione outras cores e descrições conforme necessário -->
 </div>
-</div> 
-<style type='text/css'>
-  .maplegend .legend-scale ul {margin: 0; padding: 0; color: #0f0f0f;}
-  .maplegend .legend-scale ul li {list-style: none; line-height: 18px; margin-bottom: 1.5px;}
-  .maplegend ul.legend-labels li span {float: left; height: 16px; width: 16px; margin-right: 4.5px;}
-</style>
-{% endmacro %}
 """
 
-# Renderizando o HTML da legenda com base no template e nas cores
-legend = branca.element.MacroElement()
-legend._template = branca.element.Template(legend_html)
-
-macro = MacroElement()
-macro._template = Template(legend_html)
-m.get_root().add_child(legend)
+# Adicionando a legenda ao mapa
+folium.Map().get_root().html.add_child(folium.Element(legend_html))
 
 folium.LayerControl().add_to(m)
 st_folium(m, width=1000, returned_objects=[])
