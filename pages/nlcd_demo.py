@@ -26,10 +26,6 @@ st.title("Mapa Geológico do Projeto Arenópolis - TF 2023 UnB")
 # center on Liberty Bell, add marker
 m = folium.Map(location=[-16.39374927779391, -51.663956293293964], zoom_start=10)
 
-folium.Marker(
-    [-16.39374927779391, -51.663956293293964], popup="Liberty Bell", tooltip="Liberty Bell"
-).add_to(m)
-
 colors = {
     'Complexo Alcalino, Nefelinitos': '#D5EEB4',  # Cor para 'JKλian'
     'Complexo Alcalino, Gabros Alcalinos': '#F3F802',  # Cor para 'JKλiaga'
@@ -83,7 +79,7 @@ def color_by_sigla(feature):
 
 tooltip = folium.GeoJsonTooltip(
     fields=["Nome", "Sigla", "Unidade", 'DominioEst'],
-    aliases=["Nome", "Sigla", "Unidade Geológica", 'Domínio Estrutural'],
+    aliases=["Nome: ", "Sigla: ", "Unidade Geológica: ", 'Domínio Estrutural: '],
     localize=True,
     sticky=False,
     labels=True,
