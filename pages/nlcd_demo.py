@@ -107,7 +107,7 @@ legend_template = """
 {% macro html(this, kwargs) %}
 <div id='maplegend' class='maplegend' 
     style='position: absolute; z-index: 9999; background-color: rgba(255, 255, 255, 0.5);
-     border-radius: 6px; padding: 10px; font-size: 9.5px; right: 20px; top: 20px;'>     
+     border-radius: 6px; padding: 5px; font-size: 9.5px; right: 20px; top: 20px;'>     
 <div class='legend-scale'>
   <ul class='legend-labels'>
     <li><span style='background: #D5EEB4; opacity: 0.75;'></span>Complexo Alcalino, Nefelinitos</li>
