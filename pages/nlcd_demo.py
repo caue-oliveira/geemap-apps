@@ -146,6 +146,11 @@ legend_template = """
   .maplegend .legend-scale ul li {list-style: none; line-height: 18px; margin-bottom: 1.5px;}
   .maplegend ul.legend-labels li span {float: left; height: 16px; width: 16px; margin-right: 4.5px;}
 </style>
+<script>
+$(document).ready(function(){
+    $('.draggable').draggable();
+});
+</script>
 {% endmacro %}
 """
 
