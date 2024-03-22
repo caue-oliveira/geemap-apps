@@ -196,7 +196,7 @@ Essa ferramenta ser√° valiosa pela sua simplicidade de manuseio, permitindo usu√
                         "SWIR2/NIR/SWIR1",
                         "SWIR1/NIR/SWIR2",
                     ],
-                    index=3,
+                    index=1,
                 )
 
                 with st.expander("Customize options"):
