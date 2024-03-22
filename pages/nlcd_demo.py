@@ -27,14 +27,6 @@ st.title("Mapa Geológico do Projeto Arenópolis - TF 2023 UnB")
 # Inicializa um mapa Folium
 m = folium.Map(location=[-16.39374927779391, -51.663956293293964], zoom_start=16)
 
-folium.LayerControl().add_to(m)
-#folium.TileLayer('openstreetmap').add_to(m)
-folium.TileLayer(
-    tiles='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    attr='Esri',
-    name='Esri Satellite',
-    overlay=False,
-    control=True).add_to(m)
 # Adiciona o GeoDataFrame como GeoJson ao mapa
 #folium.GeoJson(unds).add_to(m)
 
