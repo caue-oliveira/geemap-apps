@@ -1,5 +1,4 @@
 import streamlit as st
-import leafmap.foliumap as leafmap
 import folium
 import geopandas as gpd
 
@@ -23,7 +22,7 @@ st.sidebar.info(
 st.title("Marker Cluster")
 
 # Download the shp from github
-unds = '../unidades.zip'
+unds = 'unidades.zip'
 
 
 gdf = gpd.read_file(unds)
