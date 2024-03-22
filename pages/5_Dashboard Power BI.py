@@ -17,10 +17,8 @@ st.sidebar.image(logo)
 st.title("Dashboard Power BI - Política Pró-Minerais Estratégicos")
 
 st.markdown('''
- O dashboard foi elaborado durante meu período no Departamento de Transformação e Tecnologia Mineral do Ministério de
- Minas e Energia. A plataforma interativa foi desenvolvida no Power BI, com o objetivo de trazer transparência para a 
- Política de Apoio ao Licenciamento Ambiental de Projetos de Investimentos para a Produção de Minerais Estratégicos 
- (Pró-Minerais Estratégicos) e o Comitê Interministerial de Análise de Projetos de Minerais Estratégicos (CTAPME). \n
+ O dashboard foi elaborado durante meu período no Departamento de Transformação e Tecnologia Mineral do Ministério de Minas e Energia. A plataforma interativa foi desenvolvida no Power BI, com o objetivo de trazer transparência para a 
+ Política de Apoio ao Licenciamento Ambiental de Projetos de Investimentos para a Produção de Minerais Estratégicos (Pró-Minerais Estratégicos) e o Comitê Interministerial de Análise de Projetos de Minerais Estratégicos (CTAPME). \n
  A ferramenta permite acessar informações acerca dos projetos de mineração habilitados na política, sendo possível investigar 
  daddos dos empreendimentos, investimento, títulos minerários, produção, reservas, recursos e informações gerais sobre 
  o licenciamento ambiental.
