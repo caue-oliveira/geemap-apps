@@ -1,6 +1,7 @@
 # Libs import
 import streamlit as st
 import geemap.foliumap as geemap
+from streamlit_pdf_viewer import pdf_viewer
 
 # Page configuration STARTS
 st.set_page_config(layout="wide")
@@ -35,6 +36,4 @@ Essa página foi desenvolvida utilizando o [streamlit](https://streamlit.io), a 
 st.markdown(markdown)
 # Page configuration ENDS
 
-m = geemap.Map()
-m.add_basemap("HYBRID")
-m.to_streamlit(height=500)
+pdf_viewer('data/cv_caue.pdf')
