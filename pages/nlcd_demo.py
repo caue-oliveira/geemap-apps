@@ -27,7 +27,7 @@ def app():
     m = folium.Map(location=[-16.39374927779391, -51.663956293293964], zoom_start=5)
 
     # Adiciona o GeoDataFrame como GeoJson ao mapa
-    folium.GeoJson(unds).add_to(m)
+    #folium.GeoJson(unds).add_to(m)
 
     # Exibe o mapa no Streamlit
     m.to_streamlit(height=700)
