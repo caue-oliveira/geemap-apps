@@ -129,7 +129,7 @@ legend_template = """
 # Add the legend to the map
 macro = MacroElement()
 macro._template = Template(legend_template)
-map.get_root().add_child(macro)
+m.get_root().add_child(macro)
 
 
 folium.LayerControl().add_to(m)
