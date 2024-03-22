@@ -32,7 +32,6 @@ folium.Marker(
 ).add_to(m)
 
 colors = {
-    {
         'D1f': '#ff0000',  # Cor para 'D1f'
         'JKλian': '#00ff00',  # Cor para 'JKλian'
         'JKλiaga': '#0000ff',  # Cor para 'JKλiaga'
@@ -72,8 +71,6 @@ colors = {
         'NP1apoch': '#99cc99',  # Cor para 'NP1apoch'
         'NP1δmb': '#9999cc'  # Cor para 'NP1δmb'
     }
-    # Adicione mais cores conforme necessário para outros valores de 'Sigla'
-}
 
 def color_by_sigla(feature):
     sigla = feature['properties'].get('Sigla', '')  # Obtém o valor da propriedade 'Sigla', ou uma string vazia se não existir
