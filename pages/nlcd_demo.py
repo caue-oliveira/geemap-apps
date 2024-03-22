@@ -70,7 +70,8 @@ def color_by_sigla(feature):
     sigla = feature['properties'].get('Sigla', '')  # Obtém o valor da propriedade 'Sigla', ou uma string vazia se não existir
     return {
         'stroke': False,
-        'fillColor': colors.get(sigla, '#ffffff'),  # Obtém a cor correspondente ao valor da 'Sigla' no mapeamento, ou branco (#ffffff) como padrão
+        'fillColor': colors.get(sigla, '#ffffff'),
+        'fillOpacity': 0.8
     }
 folium.GeoJson(unds, style_function=color_by_sigla).add_to(m)
 
