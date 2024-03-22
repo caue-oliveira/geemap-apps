@@ -131,7 +131,7 @@ legend_template = """
 
 <div id='maplegend' class='maplegend' 
     style='position: absolute; z-index: 9999; background-color: rgba(255, 255, 255, 0.5);
-     border-radius: 6px; padding: 5px; font-size: 9.5px; right: 50px; top: 40px;'>   
+     border-radius: 6px; padding: 5px; font-size: 9.5px; right: 50px; top: 50x;'>   
      
 <div class='legend-title'>Legenda</div>  
 <div class='legend-scale'>
