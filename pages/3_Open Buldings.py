@@ -20,5 +20,5 @@ Esta aplicação web foi desenvolvida em JavaScript dentro do editor de código 
  Utilizando dados do Open Buildings V3, ela calcula o número de edifícios dentro de uma área definida pelo usuário.\n
 A ferramenta considera apenas construções com confiabilidade acima de 70%. Os usuários têm a opção de exportar os dados 
 nos formatos SHP ou KML, proporcionando maior versatilidade na análise e utilização das informações disponíveis.\n
-Para acessar o aplicativo, clique aqui:[ Open Buildings Web App]
+Para acessar o aplicativo, clique aqui:[Open Buildings Web App]('https://ee-caueoliveira99.projects.earthengine.app/view/openbuildings-caue')
 ''')
