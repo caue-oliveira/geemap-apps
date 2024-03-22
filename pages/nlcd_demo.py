@@ -131,7 +131,7 @@ legend._template = branca.element.Template(legend_html)
 
 macro = MacroElement()
 macro._template = Template(legend_html)
-
-
 m.get_root().add_child(legend)
+
+folium.LayerControl().add_to(m)
 st_folium(m, width=1000, returned_objects=[])
