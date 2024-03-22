@@ -82,7 +82,23 @@ def color_by_sigla(feature):
         'fillColor': colors.get(sigla, '#ffffff'),
         'fillOpacity': 0.8
     }
-folium.GeoJson(unds, style_function=color_by_sigla).add_to(m)
+
+tooltip = folium.GeoJsonTooltip(
+    fields=["name", "medianincome", "change"],
+    aliases=["State:", "2015 Median Income(USD):", "Median % Change:"],
+    localize=True,
+    sticky=False,
+    labels=True,
+    style="""
+        background-color: #F0EFEF;
+        border: 2px solid black;
+        border-radius: 3px;
+        box-shadow: 3px;
+    """,
+    max_width=800,
+)
+
+folium.GeoJson(unds, style_function=color_by_sigla, tooltip=tooltip).add_to(m)
 
 
 # call to render Folium map in Streamlit, but don't get any data back
