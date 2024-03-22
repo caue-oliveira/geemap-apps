@@ -24,7 +24,7 @@ st.sidebar.info(
 st.title("Mapa Geológico do Projeto Arenópolis - TF 2023 UnB")
 
 # center on Liberty Bell, add marker
-m = folium.Map(location=[-16.39374927779391, -51.663956293293964], zoom_start=11)
+m = folium.Map(location=[-16.39374927779391, -51.663956293293964], tiles= 'Esri.WorldImagery', zoom_start=11)
 
 colors = {
     'Complexo Alcalino, Nefelinitos': '#D5EEB4',  # Cor para 'JKλian'
