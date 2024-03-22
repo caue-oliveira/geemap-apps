@@ -26,14 +26,14 @@ unds = 'data/unidades.geojson'
 
 
 # Calcula o centroide médio para posicionar o mapa
-centroid_lat = gdf_filter.centroid.y.mean()
-centroid_lon = gdf_filter.centroid.x.mean()
+centroid_lat = unds.centroid.y.mean()
+centroid_lon = unds.centroid.x.mean()
 
 # Inicializa um mapa Folium
 m = folium.Map(location=[centroid_lat, centroid_lon], zoom_start=5)
 
 # Adiciona o GeoDataFrame como GeoJson ao mapa
-folium.GeoJson(gdf_filter).add_to(m)
+folium.GeoJson(unds).add_to(m)
 
 # Exibe o mapa no Streamlit
 st.write(m)
