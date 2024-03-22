@@ -34,8 +34,10 @@ colors = {
     'Complexo Alcalino, Subvulcânicas': '#14E8C3',  # Cor para 'JKλiasv'
     'Complexo Alcalino, Ijolitos e melteigitos': '#128BB3',  # Cor para 'JKλiaop',
     'Complexo Alcalino, Diques de basanito e fonolito': '#128BB3',
-    'Formação Furnas': '#EFA10B',  # Cor para 'D1f'
-    'Formação Ponta Grossa': '#F3B26B',  # Cor para 'Dpg'
+    'Bacia do Paraná, Formação Furnas': '#EFA10B',  # Cor para 'D1f'
+    'Bacia do Paraná, Formação Ponta Grossa': '#F3B26B',  # Cor para 'Dpg'
+    'Granitóide': '#AF252C',
+    'Tonalito Indiferenciado': '#D80D8D',
     'Granito Serra do Iran, Diorito': '#E41C50',  # Cor para 'NP3γsnird'
     'Granito Serra do Iran, Monzogranito': '#FEC0EF',  # Cor para 'NP3γsnirm'
     'Granito Serra do Iran, Subvulcânica': '#FEC0EF',  # Cor para 'NP3γsnirsv'
@@ -45,6 +47,7 @@ colors = {
     'Granito Serra do Iran, Granodiorito': '#BEA387',  # Cor para 'NP3γsnirgr'
     'Granito Rio Caiapó, Granito Equigranular Fino': '#FC555A',
     'Granito Rio Caiapó, Granito Porfirítico Grosso': '#D65355',
+    'Granito Rio Caiapó, Diorito': '#B9494D',
     'Córrego do Horácio': '#A9C1C4',
     'Granito Serra do Tatu': '#F5CBB6',  # Cor para 'NP2γst'
     'Ribeirão Água Limpa, Granito fino': '#E7A5AE',  # Cor para 'NP2aγalgf'
@@ -66,6 +69,7 @@ colors = {
     'Córrego do Santo Antônio, Anfibolito': '#6D8232',  # Cor para 'NP1apaa'
     'Córrego do Santo Antônio, Mármore': '#2CB2BF',
     'Córrego do Santo Antônio, Quartzito': '#4AC209',
+    'Córrego do Santo Antônio, Gabro': '#2F7B6D',
     'Córrego do Santo Antônio, Chert': '#9900ff',  # Cor para 'NP1apach'
     'Morro do Baú, Gabro': '#5CCEAC',  # Cor para 'NP1δmb'
     'Gnaisse Ribeirão': '#990099',  # Cor para 'PP3γr'
