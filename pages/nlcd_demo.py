@@ -188,4 +188,4 @@ m.get_root().add_child(macro)
 
 
 folium.LayerControl().add_to(m)
-st_folium(m, width=1000, returned_objects=[])
+st_folium(m, width=1000)
