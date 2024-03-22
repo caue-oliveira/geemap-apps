@@ -33,10 +33,10 @@ folium.Marker(
 ).add_to(m)
 
 colors = {
-    'JKλian': '#D5EEB4',  # Cor para 'JKλian'
-    'JKλiaga': '#F3F802',  # Cor para 'JKλiaga'
+    'Complexo Alcalino, Nefelinitos': '#D5EEB4',  # Cor para 'JKλian'
+    'Complexo Alcalino, Gabros Alcalinos': '#F3F802',  # Cor para 'JKλiaga'
     'JKλiasv': '#14E8C3',  # Cor para 'JKλiasv'
-    'JKλiaop': '#128BB3',  # Cor para 'JKλiaop'
+    'Complexo Alcalino, Ijolitos e melteigitos': '#128BB3',  # Cor para 'JKλiaop'
     'D1f': '#EFA10B',  # Cor para 'D1f'
     'Dpg': '#F3B26B',  # Cor para 'Dpg'
     'NP3γsnird': '#E41C50',  # Cor para 'NP3γsnird'
@@ -68,7 +68,7 @@ colors = {
 }
 
 def color_by_sigla(feature):
-    sigla = feature['properties'].get('Sigla', '')  # Obtém o valor da propriedade 'Sigla', ou uma string vazia se não existir
+    sigla = feature['properties'].get('Nome', '')  # Obtém o valor da propriedade 'Sigla', ou uma string vazia se não existir
     return {
         'stroke': False,
         'fillColor': colors.get(sigla, '#ffffff'),
