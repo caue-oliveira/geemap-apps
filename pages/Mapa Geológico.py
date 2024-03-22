@@ -18,8 +18,20 @@ st.sidebar.info(
         [GitHub](https://github.com/caue-oliveira) | [LinkedIn](https://www.linkedin.com/in/caueoliveira99) | [Currículo](https://www.canva.com/design/DAF4RWCBOuk/zsbheu6nUrXpw8PWQpcpjw/view?utm_content=DAF4RWCBOuk&utm_campaign=designshare&utm_medium=link&utm_source=viewer)
     """
 )
+logo = "data/SGRS_LG.png"
+st.sidebar.image(logo)
 
 st.title("Mapa Geológico do Projeto Arenópolis - TF 2023 UnB")
+st.markdown(
+    """
+    O Trabalho Final (TF) é um projeto de mapeamento geológico realizado pelos alunos de geologia da Universidade de Brasília, equivalente ao Trabalho de Conclusão de Curso (TCC).
+    
+    O mapa abaixo é o resultado do Projeto Arenópolis (2023) realizado em 15 dias de trabalho de campo e a partir da colaboração de 21 alunos.
+    
+    O objetivo do projeto é fornecer um mapa de visualização simples, onde é possível obter informações sobre as unidades geológicas ao passar o mouse sobre elas e escolher um mapa base de preferência.
+ """
+)
+# Page config ENDS
 
 # center on Liberty Bell, add marker
 m = folium.Map(location=[-16.39374927779391, -51.663956293293964], tiles= 'openstreetmap', zoom_start=11)
@@ -131,7 +143,7 @@ legend_template = """
 
 <div id='maplegend' class='maplegend' 
     style='position: absolute; z-index: 9999; background-color: rgba(255, 255, 255, 0.5);
-     border-radius: 6px; padding: 5px; font-size: 9.5px; right: 50px; top: 70px;'>   
+     border-radius: 6px; padding: 5px; font-size: 9.5px; right: 50px; top: 100px;'>   
      
 <div class='legend-title'>Legenda</div>  
 <div class='legend-scale'>
