@@ -33,10 +33,12 @@ folium.Marker(
 ).add_to(m)
 
 
+# Função para gerar cores hexadecimais aleatórias
 def random_color_hex():
     color = "#{:06x}".format(random.randint(0, 0xFFFFFF))
     return color
 
+# Função de estilo para atribuir cores aleatórias com base na propriedade 'Sigla'
 def style_function(feature):
     return {
         'fillColor': random_color_hex(),
@@ -45,10 +47,11 @@ def style_function(feature):
         'fillOpacity': 0.8
     }
 
-folium.GeoJson(unds,
-               style_function=style_function()
-               ).add_to(m)
-
+# Adicionar o GeoJSON ao mapa com a função de estilo
+folium.GeoJson(
+    unds,
+    style_function=style_function  # Não inclua os parênteses aqui
+).add_to(m)
 
 # call to render Folium map in Streamlit, but don't get any data back
 # from the map (so that it won't rerun the app when the user interacts)
