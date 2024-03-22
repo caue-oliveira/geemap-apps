@@ -34,6 +34,7 @@ folium.LayerControl().add_to(m)
 st_data = st_folium(m, height=725, width=1500)'''
 # center on Liberty Bell, add marker
 m = folium.Map(location=[39.949610, -75.150282], zoom_start=16)
+folium.LayerControl().add_to(m)
 folium.Marker(
     [39.949610, -75.150282], popup="Liberty Bell", tooltip="Liberty Bell"
 ).add_to(m)
