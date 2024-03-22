@@ -30,6 +30,7 @@ folium.LayerControl().add_to(m)
 folium.Marker(
     [-16.39374927779391, -51.663956293293964], popup="Liberty Bell", tooltip="Liberty Bell"
 ).add_to(m)
+folium.GeoJson(data=unds).add_to(m)
 
 # call to render Folium map in Streamlit, but don't get any data back
 # from the map (so that it won't rerun the app when the user interacts)
