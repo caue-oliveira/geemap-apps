@@ -22,15 +22,15 @@ st.title("Portfólio de Cauê Oliveira")
 st.markdown(
     """
     Olá, me chamo Cauê Oliveira. Sou geólogo formado pela Universidade de Brasília com uma paixão pelas geotecnologias.
-    Desenvolvi esta página para mostrar um pouco das minhas habilidades e projetos.
+    Desenvolvi esta página para mostrar um pouco das minhas habilidades e projetos. \n
     Aqui poderão ser encontrados projetos no Google Earth Engine, tanto no JavaScrpit quanto no Python API, painéis Power BI e mapas confeccionados por mim. 
     """
 )
 
-st.header("Sobre")
+st.subheader("Sobre")
 
 markdown = """
-Essa página foi desenvolvida utilizando o [streamlit](https://streamlit.io), a partir do projeto open-source do Professor Qiusheng Wu da Universidade do Tennessee ([GitHub repository](https://github.com/giswqs/geemap-apps)).
+Essa página foi desenvolvida utilizando o [streamlit](https://streamlit.io), a partir do projeto open-source do Professor Qiusheng Wu da Universidade do Tennessee ([GitHub repository](https://github.com/giswqs/geemap-apps)). 
 """
 
 st.markdown(markdown)
