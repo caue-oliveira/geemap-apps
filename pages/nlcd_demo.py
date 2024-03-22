@@ -33,13 +33,20 @@ folium.Marker(
 ).add_to(m)
 
 
+def random_color_hex():
+    color = "#{:06x}".format(random.randint(0, 0xFFFFFF))
+    return color
 
+def style_function(feature):
+    return {
+        'fillColor': random_color_hex(),
+        'color': 'black',
+        'weight': 2,
+        'fillOpacity': 0.8
+    }
 
 folium.GeoJson(unds,
-               style_function=lambda feature:{
-                  'stroke': False,
-                   'fillOpacity': 0.8
-               }
+               style_function=style_function()
                ).add_to(m)
 
 
