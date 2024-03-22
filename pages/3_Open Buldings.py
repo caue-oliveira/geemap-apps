@@ -22,3 +22,5 @@ A ferramenta considera apenas construções com confiabilidade acima de 70%. Os 
 nos formatos SHP ou KML, proporcionando maior versatilidade na análise e utilização das informações disponíveis.\n
 Para acessar o aplicativo, clique aqui: [Open Buildings Web App](https://ee-caueoliveira99.projects.earthengine.app/view/openbuildings-caue)
 ''')
+st.image('data/openbuildings.png')
+st.image('data/openbuildings_zoom.png')
