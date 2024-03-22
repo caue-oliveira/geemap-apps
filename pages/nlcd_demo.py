@@ -26,7 +26,7 @@ st.title("Mapa Geológico do Projeto Arenópolis - TF 2023 UnB")
 # center on Liberty Bell, add marker
 m = folium.Map(location=[-16.39374927779391, -51.663956293293964], tiles= 'Esri.WorldImagery', zoom_start=11)
 folium.TileLayer('openstreetmap').add_to(m)
-folium.LayerControl().add_to(my_map)
+folium.LayerControl().add_to(m)
 
 
 colors = {
