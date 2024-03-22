@@ -82,7 +82,7 @@ Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usu�
 
     with row1_col2:
 
-        keyword = st.text_input("Search for a location:", "")
+        keyword = st.text_input("Procure por uma localidade:", "")
         if keyword:
             locations = geemap.geocode(keyword)
             if locations is not None and len(locations) > 0:
@@ -100,7 +100,6 @@ Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usu�
             [
                 "Landsat 8 OLI Surface Reflectance",
                 "Sentinel-2 MSI Surface Reflectance",
-                "Any Earth Engine ImageCollection"
             ],
             index=1,
         )
@@ -108,37 +107,10 @@ Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usu�
         if collection in [
             "Landsat 8 OLI Surface Reflectance",
             "Sentinel-2 MSI Surface Reflectance",
-            "Any Earth Engine ImageCollection"
         ]:
             roi_options = ["Uploaded GeoJSON"]
         else:
             roi_options = ["Uploaded GeoJSON"]
-
-        if collection == "Any Earth Engine ImageCollection":
-            keyword = st.text_input("Enter a keyword to search (e.g., MODIS):", "")
-            if keyword:
-
-                assets = geemap.search_ee_data(keyword)
-                ee_assets = []
-                for asset in assets:
-                    if asset["ee_id_snippet"].startswith("ee.ImageCollection"):
-                        ee_assets.append(asset)
-
-                asset_titles = [x["title"] for x in ee_assets]
-                dataset = st.selectbox("Select a dataset:", asset_titles)
-                if len(ee_assets) > 0:
-                    st.session_state["ee_assets"] = ee_assets
-                    st.session_state["asset_titles"] = asset_titles
-                    index = asset_titles.index(dataset)
-                    ee_id = ee_assets[index]["id"]
-                else:
-                    ee_id = ""
-
-                if dataset is not None:
-                    with st.expander("Show dataset details", False):
-                        index = asset_titles.index(dataset)
-                        html = geemap.ee_data_html(st.session_state["ee_assets"][index])
-                        st.markdown(html, True)
 
         sample_roi = st.selectbox(
             "Select a sample ROI or upload a GeoJSON file:",
@@ -149,12 +121,12 @@ Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usu�
     with row1_col1:
 
         with st.expander(
-            "Steps: Draw a rectangle on the map -> Export it as a GeoJSON -> Upload it back to the app -> Click the Submit button. Expand this tab to see a demo 👉"
+            "Passos: Desenhe sua geometria no mapa -> Exporte-a no formato GeoJSON -> Faça o upload de sua geometria (de preferência em GeoJSON) -> Click no botão Submit para gerar sua imagem."
         ):
             video_empty = st.empty()
 
         data = st.file_uploader(
-            "Upload a GeoJSON file to use as an ROI. Customize timelapse parameters and then click the Submit button 😇👇",
+            "Faça o upload de um arquivo GeoJSON para usá-lo como área de interesse 👇. Personalize os parâmetros para o seu índice e clique no botão Submit na barra lateral.",
             type=["geojson", "kml", "zip"],
         )
 
