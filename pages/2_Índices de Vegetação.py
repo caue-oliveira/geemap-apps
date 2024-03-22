@@ -186,8 +186,17 @@ Essa ferramenta ser√° valiosa pela sua simplicidade de manuseio, permitindo usu√
                         "NDVI",
                         "NDWI",
                         "SAVI",
-                                            ],
-                    index=7,
+                        "NIR/SWIR1/Red",
+                        "SWIR2/NIR/Red",
+                        "SWIR2/SWIR1/Red",
+                        "SWIR1/NIR/Blue",
+                        "NIR/SWIR1/Blue",
+                        "SWIR2/NIR/Green",
+                        "SWIR1/NIR/Red",
+                        "SWIR2/NIR/SWIR1",
+                        "SWIR1/NIR/SWIR2",
+                    ],
+                    index=9,
                 )
 
                 with st.expander("Customize options"):
