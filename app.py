@@ -9,7 +9,7 @@ st.set_page_config(layout="wide")
 # Customize the sidebar
 markdown = """
     Cauê Oliveira Miranda
-    [Gmail](caue.oliveira99@gmail.com) | caue.oliveira99@gmail.com
+    caue.oliveira99@gmail.com
     [GitHub](https://github.com/caue-oliveira) | [LinkedIn](https://www.linkedin.com/in/qiushengwu) | [Currículo](https://www.canva.com/design/DAF4RWCBOuk/zsbheu6nUrXpw8PWQpcpjw/view?utm_content=DAF4RWCBOuk&utm_campaign=designshare&utm_medium=link&utm_source=viewer)
 """
     # Side bar info
