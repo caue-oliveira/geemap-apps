@@ -29,7 +29,6 @@ m = folium.Map(location=[-16.39374927779391, -51.663956293293964], zoom_start=16
 
 folium.LayerControl().add_to(m)
 folium.TileLayer('openstreetmap').add_to(m)
-folium.TileLayer('mapquestopen').add_to(m)
 folium.TileLayer('Esri Sattelite').add_to(m)
 # Adiciona o GeoDataFrame como GeoJson ao mapa
 #folium.GeoJson(unds).add_to(m)
