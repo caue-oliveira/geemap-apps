@@ -29,6 +29,6 @@ st.markdown('''
  
 ''')
 
-st.image('data/openbuildings.png')
+st.image('data/dashboard_capa.png')
 
-st.image('data/openbuildings_zoom.png')
+st.image('data/dashboard_2.png')
