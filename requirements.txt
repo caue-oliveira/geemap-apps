@@ -6,3 +6,5 @@ ee
 folium
 leafmap
 fiona
+matplotlib
+mapclassify

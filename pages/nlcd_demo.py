@@ -1,6 +1,6 @@
 import streamlit as st
-import folium
 import geopandas as gpd
+import folium
 
 st.set_page_config(layout="wide")
 
@@ -19,14 +19,21 @@ st.sidebar.info(
     """
 )
 
-st.title("Marker Cluster")
+st.title("Mapa Geológico do Projeto Arenópolis - TF 2023 UnB")
 
-# Download the shp from github
-unds = 'unidades.zip'
+unds = 'data/unidades.geojson'
 
 
-gdf = gpd.read_file(unds)
-gdf_filter = gdf [['Nome', 'Sigla', 'Unidade', 'DominioEst', 'geometry']].fillna(0)
-gdf_filter = gdf_filter.to_crs(epsg=4326)
 
-gdf_filter.explore(column='Sigla', name = 'Sigla')
+# Calcula o centroide médio para posicionar o mapa
+centroid_lat = gdf_filter.centroid.y.mean()
+centroid_lon = gdf_filter.centroid.x.mean()
+'''
+# Inicializa um mapa Folium
+m = folium.Map(location=[centroid_lat, centroid_lon], zoom_start=5)
+
+# Adiciona o GeoDataFrame como GeoJson ao mapa
+folium.GeoJson(gdf_filter).add_to(m)
+
+# Exibe o mapa no Streamlit
+st.write(m)
