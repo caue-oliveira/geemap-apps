@@ -26,11 +26,11 @@ st.title("Mapa Geológico do Projeto Arenópolis - TF 2023 UnB")
 
 # center on Liberty Bell, add marker
 m = folium.Map(location=[-16.39374927779391, -51.663956293293964], zoom_start=12)
-folium.LayerControl().add_to(m)
+
 folium.Marker(
     [-16.39374927779391, -51.663956293293964], popup="Liberty Bell", tooltip="Liberty Bell"
 ).add_to(m)
-folium.GeoJson(data=unds).add_to(m)
+folium.GeoJson(unds).add_to(m)
 
 # call to render Folium map in Streamlit, but don't get any data back
 # from the map (so that it won't rerun the app when the user interacts)
