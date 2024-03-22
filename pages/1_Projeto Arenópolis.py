@@ -28,7 +28,7 @@ st.markdown(
     
     O mapa abaixo é o resultado do Projeto Arenópolis (2023) realizado em 15 dias de trabalho de campo e a partir da colaboração de 21 alunos.
     
-    O objetivo do projeto é fornecer um mapa de visualização simples, onde é possível obter informações sobre as unidades geológicas ao passar o mouse sobre elas e escolher um mapa base de preferência.
+    O objetivo dessa ferramenta é servir como um mapa de visualização simples, no qual é possível obter informações sobre as unidades geológicas ao passar o mouse sobre elas e escolher um mapa base de preferência.
  """
 )
 # Page config ENDS
