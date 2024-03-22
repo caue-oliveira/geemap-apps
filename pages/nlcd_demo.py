@@ -135,7 +135,9 @@ legend_template = """
 
 <div id='maplegend' class='maplegend' 
     style='position: absolute; z-index: 9999; background-color: rgba(255, 255, 255, 0.5);
-     border-radius: 6px; padding: 5px; font-size: 9.5px; right: 20px; top: 20px;'>     
+     border-radius: 6px; padding: 5px; font-size: 9.5px; right: 20px; top: 20px;'>   
+     
+<div class='legend-title'>Legenda</div>  
 <div class='legend-scale'>
   <ul class='legend-labels'>
     <li><span style='background: #D5EEB4; opacity: 0.75;'></span>Complexo Alcalino, Nefelinitos</li>
@@ -166,6 +168,7 @@ legend_template = """
     <li><span style='background: #331549; opacity: 0.75;'></span>Gnaisse Arenópolis, Anfibolito</li>
     <li><span style='background: #B282BF; opacity: 0.75;'></span>Gnaisse Arenópolis, Gnaisse Granítico</li>
     <li><span style='background: #546087; opacity: 0.75;'></span>Gnaisse Arenópolis, Ultramáfica</li
+
   </ul>
 </div>
 </div> 
