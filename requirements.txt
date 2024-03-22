@@ -4,7 +4,4 @@ fiona
 geopandas
 ee
 folium
-leafmap
-fiona
-matplotlib
-mapclassify
+streamlit-folium
