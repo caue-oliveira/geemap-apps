@@ -147,8 +147,27 @@ legend_template = """
   .maplegend ul.legend-labels li span {float: left; height: 16px; width: 16px; margin-right: 4.5px;}
 </style>
 <script>
-$(document).ready(function(){
-    $('.draggable').draggable();
+document.addEventListener('DOMContentLoaded', function() {
+    var legend = document.getElementById('maplegend');
+    var isDragging = false;
+    var offset = {x: 0, y: 0};
+
+    legend.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        offset.x = e.clientX - legend.getBoundingClientRect().left;
+        offset.y = e.clientY - legend.getBoundingClientRect().top;
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if (isDragging) {
+            legend.style.left = e.clientX - offset.x + 'px';
+            legend.style.top = e.clientY - offset.y + 'px';
+        }
+    });
+
+    document.addEventListener('mouseup', function() {
+        isDragging = false;
+    });
 });
 </script>
 {% endmacro %}
