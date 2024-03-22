@@ -1,6 +1,7 @@
 import streamlit as st
 import folium
 from streamlit_folium import st_folium
+from jinja2 import Template
 
 unds = ('data/unidades.geojson')
 
@@ -100,7 +101,30 @@ tooltip = folium.GeoJsonTooltip(
 
 folium.GeoJson(unds, name= 'Mapa Geológico', style_function=color_by_sigla, tooltip=tooltip).add_to(m)
 
-
+legend_template = """
+{% macro html(this, kwargs) %}
+<div id='maplegend' class='maplegend' 
+    style='position: absolute; z-index: 9999; background-color: rgba(255, 255, 255, 0.5);
+     border-radius: 6px; padding: 10px; font-size: 10.5px; right: 20px; top: 20px;'>     
+<div class='legend-title'>Geological Legend</div>
+<div class='legend-scale'>
+  <ul class='legend-labels'>
+    {% for category, color in categories.items() %}
+    <li><span style='background: {{ color }}; opacity: 0.75;'></span>{{ category }}</li>
+    {% endfor %}
+  </ul>
+</div>
+</div> 
+<style type='text/css'>
+  .maplegend .legend-scale ul {margin: 0; padding: 0; color: #0f0f0f;}
+  .maplegend .legend-scale ul li {list-style: none; line-height: 18px; margin-bottom: 1.5px;}
+  .maplegend ul.legend-labels li span {float: left; height: 16px; width: 16px; margin-right: 4.5px;}
+</style>
+{% endmacro %}
+"""
+# Renderizando o HTML da legenda com base no template e nas cores
+legend_html = Template(legend_template).render(categories=colors)
+m.get_root().html.add_child(folium.Element(legend_html))
 # call to render Folium map in Streamlit, but don't get any data back
 # from the map (so that it won't rerun the app when the user interacts)
 folium.LayerControl().add_to(m)
