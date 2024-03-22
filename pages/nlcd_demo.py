@@ -34,12 +34,7 @@ folium.Marker(
 folium.GeoJson(unds,
                style_function=lambda feature:{
                    'stroke': False,
-                   'fillColor': "#ffff00" if 'D1f' in feature['properties']['Sigla'].lower()
-                   else "#ffff00",
-                   "color": "black",
-                   "weight": 2,
-                   "dashArray": "5, 5",
-
+                   'fillColor': "#ffff00"
                }
                ).add_to(m)
 
