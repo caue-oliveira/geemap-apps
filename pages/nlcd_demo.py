@@ -30,6 +30,7 @@ m = folium.Map(location=[-16.39374927779391, -51.663956293293964], zoom_start=10
 folium.Marker(
     [-16.39374927779391, -51.663956293293964], popup="Liberty Bell", tooltip="Liberty Bell"
 ).add_to(m)
+
 folium.GeoJson(unds,
                style_function=lambda feature:{
                    'stroke': False,
@@ -41,6 +42,7 @@ folium.GeoJson(unds,
 
                }
                ).add_to(m)
+
 
 # call to render Folium map in Streamlit, but don't get any data back
 # from the map (so that it won't rerun the app when the user interacts)
