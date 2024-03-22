@@ -52,13 +52,13 @@ def app():
 
     today = date.today()
 
-    st.title("Create Satellite Timelapse")
+    st.title("Índices de Vegetação")
 
     st.markdown(
         """
-        An interactive web app for creating [Landsat](https://developers.google.com/earth-engine/datasets/catalog/landsat)/[GOES](https://jstnbraaten.medium.com/goes-in-earth-engine-53fbc8783c16) timelapse for any location around the globe. 
-        The app was built using [streamlit](https://streamlit.io), [geemap](https://geemap.org), and [Google Earth Engine](https://earthengine.google.com). For more info, check out my streamlit [blog post](https://blog.streamlit.io/creating-satellite-timelapse-with-streamlit-and-earth-engine). 
-    """
+Este web app interativo tem como objetivo criar índices de vegetação a partir de imagens dos satélites Landsat 8 e Sentinel 2. Atualmente, o aplicativo está em fase de desenvolvimento e oferece a capacidade de realizar análises de Índice de Vegetação por Diferença Normalizada (NDVI).  \n
+Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usuários realizarem rápidas análises para o monitoramento de vegetação em diversas regiões de forma automatizada. 
+         """
     )
 
     row1_col1, row1_col2 = st.columns([2, 1])
