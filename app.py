@@ -1,7 +1,5 @@
 # Libs import
 import streamlit as st
-import geemap.foliumap as geemap
-from streamlit_pdf_viewer import pdf_viewer
 
 # Page configuration STARTS
 st.set_page_config(layout="wide")
@@ -10,7 +8,7 @@ st.set_page_config(layout="wide")
 markdown = """
     Cauê Oliveira Miranda \n
     caue.oliveira99@gmail.com \n
-    [GitHub](https://github.com/caue-oliveira) | [LinkedIn](https://www.linkedin.com/in/qiushengwu) | [Currículo](https://www.canva.com/design/DAF4RWCBOuk/zsbheu6nUrXpw8PWQpcpjw/view?utm_content=DAF4RWCBOuk&utm_campaign=designshare&utm_medium=link&utm_source=viewer)
+    [GitHub](https://github.com/caue-oliveira) | [LinkedIn](https://www.linkedin.com/in/caueoliveira99) | [Currículo](https://www.canva.com/design/DAF4RWCBOuk/zsbheu6nUrXpw8PWQpcpjw/view?utm_content=DAF4RWCBOuk&utm_campaign=designshare&utm_medium=link&utm_source=viewer)
 """
     # Side bar info
 st.sidebar.title("Contato")
@@ -23,9 +21,12 @@ st.title("Portfólio de Cauê Oliveira")
 
 st.markdown(
     """
-    Olá, me chamo Cauê Oliveira. Sou geólogo formado pela Universidade de Brasília com uma paixão pelas geotecnologias.
-    Desenvolvi esta página para mostrar um pouco das minhas habilidades e projetos. \n
-    Aqui poderão ser encontrados projetos no Google Earth Engine, tanto no JavaScrpit quanto no Python API, painéis Power BI e mapas confeccionados por mim. 
+    Olá, meu nome é Cauê Oliveira. Seja bem-vindo à minha página. \n
+    Sou geólogo formado pela Universidade de Brasília, com uma paixão especial pelas geotecnologias. Desenvolvi este espaço para compartilhar um pouco das minhas habilidades e projetos. \n
+    
+    Os projetos que desenvolvi podem ser acessados na guia lateral à esquerda da página. Aqui você encontrará uma variedade de projetos no Google Earth Engine, tanto utilizando o JavaScript quanto a API do Python, além de painéis Power BI e mapas que elaborei. \n
+    
+    Sinta-se à vontade para explorar e entrar em contato caso tenha alguma pergunta ou oportunidade de colaboração.
     """
 )
 
@@ -37,5 +38,3 @@ Essa página foi desenvolvida utilizando o [streamlit](https://streamlit.io), a 
 
 st.markdown(markdown)
 # Page configuration ENDS
-
-pdf_viewer('data/cv_caue.pdf')

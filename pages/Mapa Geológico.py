@@ -1,24 +1,21 @@
+# Libs
 import streamlit as st
 import folium
 from streamlit_folium import st_folium
 from branca.element import Template, MacroElement
 
+# Arquivo GeoJSON
 unds = ('data/unidades.geojson')
 
+# Page Config STARTS
 st.set_page_config(layout="wide")
 
+st.sidebar.title("Contato")
 st.sidebar.info(
     """
-    - Web App URL: <https://streamlit.geemap.org>
-    - GitHub repository: <https://github.com/giswqs/streamlit-geospatial>
-    """
-)
-
-st.sidebar.title("Contact")
-st.sidebar.info(
-    """
-    Qiusheng Wu: <https://wetlands.io>
-    [GitHub](https://github.com/giswqs) | [Twitter](https://twitter.com/giswqs) | [YouTube](https://www.youtube.com/c/QiushengWu) | [LinkedIn](https://www.linkedin.com/in/qiushengwu)
+        Cauê Oliveira Miranda \n
+        caue.oliveira99@gmail.com \n
+        [GitHub](https://github.com/caue-oliveira) | [LinkedIn](https://www.linkedin.com/in/caueoliveira99) | [Currículo](https://www.canva.com/design/DAF4RWCBOuk/zsbheu6nUrXpw8PWQpcpjw/view?utm_content=DAF4RWCBOuk&utm_campaign=designshare&utm_medium=link&utm_source=viewer)
     """
 )
 
@@ -134,7 +131,7 @@ legend_template = """
 
 <div id='maplegend' class='maplegend' 
     style='position: absolute; z-index: 9999; background-color: rgba(255, 255, 255, 0.5);
-     border-radius: 6px; padding: 5px; font-size: 9.5px; right: 50px; top: 20px;'>   
+     border-radius: 6px; padding: 5px; font-size: 9.5px; right: -50px; top: 20px;'>   
      
 <div class='legend-title'>Legenda</div>  
 <div class='legend-scale'>
