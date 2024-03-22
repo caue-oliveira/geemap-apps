@@ -3,4 +3,4 @@ import geemap.foliumap as geemap
 
 st.title("Exposição de Mapas")
 
-st.subhead('Mapa de Localização de Projeto de Mineração')
+st.subheader('Mapa de Localização de Projeto de Mineração')
