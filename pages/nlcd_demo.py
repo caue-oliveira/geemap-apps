@@ -98,4 +98,4 @@ folium.GeoJson(unds, style_function=color_by_sigla, tooltip=tooltip).add_to(m)
 
 # call to render Folium map in Streamlit, but don't get any data back
 # from the map (so that it won't rerun the app when the user interacts)
-st_folium(m, width=1000, returned_objects=[])
+st_folium(m, width=800, returned_objects=[])
