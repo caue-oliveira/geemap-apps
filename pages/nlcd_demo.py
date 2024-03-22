@@ -105,6 +105,34 @@ folium.GeoJson(unds, name= 'Mapa Geológico', style_function=color_by_sigla, too
 # Definindo o HTML da legenda
 legend_template = """
 {% macro html(this, kwargs) %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Draggable - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+  <script>
+  $( function() {
+    $( "#maplegend" ).draggable({
+                    start: function (event, ui) {
+                        $(this).css({
+                            right: "auto",
+                            top: "auto",
+                            bottom: "auto"
+                        });
+                    }
+                });
+});
+
+  </script>
+</head>
+<body>
+
 <div id='maplegend' class='maplegend' 
     style='position: absolute; z-index: 9999; background-color: rgba(255, 255, 255, 0.5);
      border-radius: 6px; padding: 5px; font-size: 9.5px; right: 20px; top: 20px;'>     
@@ -146,30 +174,7 @@ legend_template = """
   .maplegend .legend-scale ul li {list-style: none; line-height: 18px; margin-bottom: 1.5px;}
   .maplegend ul.legend-labels li span {float: left; height: 16px; width: 16px; margin-right: 4.5px;}
 </style>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    var legend = document.getElementById('maplegend');
-    var isDragging = false;
-    var offset = {x: 0, y: 0};
 
-    legend.addEventListener('mousedown', function(e) {
-        isDragging = true;
-        offset.x = e.clientX - legend.getBoundingClientRect().left;
-        offset.y = e.clientY - legend.getBoundingClientRect().top;
-    });
-
-    document.addEventListener('mousemove', function(e) {
-        if (isDragging) {
-            legend.style.left = e.clientX - offset.x + 'px';
-            legend.style.top = e.clientY - offset.y + 'px';
-        }
-    });
-
-    document.addEventListener('mouseup', function() {
-        isDragging = false;
-    });
-});
-</script>
 {% endmacro %}
 """
 
