@@ -181,21 +181,12 @@ Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usu�
                 if st.session_state.get("roi") is not None:
                     roi = st.session_state.get("roi")
                 index_function = st.selectbox(
-                    "Select an index function:",
+                    "Selecione o índice desejado:",
                     [
                         "NDVI",
                         "NDWI",
                         "SAVI",
-                        "NIR/SWIR1/Red",
-                        "SWIR2/NIR/Red",
-                        "SWIR2/SWIR1/Red",
-                        "SWIR1/NIR/Blue",
-                        "NIR/SWIR1/Blue",
-                        "SWIR2/NIR/Green",
-                        "SWIR1/NIR/Red",
-                        "SWIR2/NIR/SWIR1",
-                        "SWIR1/NIR/SWIR2",
-                    ],
+                                            ],
                     index=9,
                 )
 
@@ -224,7 +215,7 @@ Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usu�
                 if submitted:
                     if sample_roi == "Uploaded GeoJSON" and data is None:
                         empty_text.warning(
-                            "Steps to create a timelapse: Draw a rectangle on the map -> Export it as a GeoJSON -> Upload it back to the app -> Click the Submit button. Alternatively, you can select a sample ROI from the dropdown list."
+                            "Passos: Desenhe sua geometria no mapa -> Exporte-a no formato GeoJSON -> Faça o upload de sua geometria (de preferência em GeoJSON) -> Click no botão Submit para gerar sua imagem."
                         )
                     else:
                         try:
