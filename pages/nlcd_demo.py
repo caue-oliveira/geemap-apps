@@ -1,7 +1,5 @@
 import streamlit as st
 import folium
-import random
-import string
 from streamlit_folium import st_folium
 
 unds = ('data/unidades.geojson')
@@ -98,7 +96,7 @@ tooltip = folium.GeoJsonTooltip(
     max_width=800,
 )
 
-folium.GeoJson(unds, style_function=color_by_sigla, tooltip=tooltip).add_to(m)
+folium.GeoJson(unds, style_function=color_by_sigla).add_to(m)
 
 
 # call to render Folium map in Streamlit, but don't get any data back
