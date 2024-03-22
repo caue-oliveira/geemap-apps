@@ -57,6 +57,7 @@ def app():
     st.markdown(
         """
 Este web app interativo tem como objetivo criar índices de vegetação a partir de imagens dos satélites Landsat 8 e Sentinel 2. Atualmente, o aplicativo está em fase de desenvolvimento e oferece a capacidade de realizar análises de Índice de Vegetação por Diferença Normalizada (NDVI).  \n
+O aplicativo permite fazer análises personalizadas, com filtros cobertura de nuvem e data. Os resultados são feitos por mosaicagem das imagens contidas dentro da geometria importada.
 Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usuários realizarem rápidas análises para o monitoramento de vegetação em diversas regiões de forma automatizada. 
          """
     )
@@ -93,9 +94,9 @@ Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usu�
                 st.session_state["zoom_level"] = 12
 
         collection = st.selectbox(
-            "Select a satellite image collection: ",
+            "Selecione o satélite desejado: ",
             [
-                "Landsat TM-ETM-OLI Surface Reflectance",
+                "Landsat 8 OLI Surface Reflectance",
                 "Sentinel-2 MSI Surface Reflectance",
                 "Any Earth Engine ImageCollection"
             ],
@@ -103,7 +104,7 @@ Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usu�
         )
 
         if collection in [
-            "Landsat TM-ETM-OLI Surface Reflectance",
+            "Landsat 8 OLI Surface Reflectance",
             "Sentinel-2 MSI Surface Reflectance",
             "Any Earth Engine ImageCollection"
         ]:
@@ -160,7 +161,7 @@ Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usu�
         if sample_roi != "Uploaded GeoJSON":
 
             if collection in [
-                "Landsat TM-ETM-OLI Surface Reflectance",
+                "Landsat 8 OLI Surface Reflectance",
                 "Sentinel-2 MSI Surface Reflectance",
             ]:
                 gdf = gpd.GeoDataFrame(
@@ -188,11 +189,11 @@ Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usu�
     with row1_col2:
 
         if collection in [
-            "Landsat TM-ETM-OLI Surface Reflectance",
+            "Landsat 8 OLI Surface Reflectance",
             "Sentinel-2 MSI Surface Reflectance",
         ]:
 
-            if collection == "Landsat TM-ETM-OLI Surface Reflectance":
+            if collection == "Landsat 8 OLI Surface Reflectance":
                 sensor_start_year = 2013
                 timelapse_title = "Landsat Index"
 
@@ -260,7 +261,7 @@ Essa ferramenta será valiosa pela sua simplicidade de manuseio, permitindo usu�
                             start_date = f"{start_year}-{start_month:02d}-01"
                             end_date = f"{end_year}-{end_month:02d}-{calendar.monthrange(end_year, end_month)[1]}"
 
-                            if collection == "Landsat TM-ETM-OLI Surface Reflectance":
+                            if collection == "Landsat 8 OLI Surface Reflectance":
                                 img_collection = (
                                     ee.ImageCollection("LANDSAT/LC08/C02/T1_L2")
                                     .filterBounds(roi)
