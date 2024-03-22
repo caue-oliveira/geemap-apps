@@ -6,6 +6,7 @@ from streamlit_folium import st_folium
 
 unds = ('data/unidades.geojson')
 
+
 st.set_page_config(layout="wide")
 
 st.sidebar.info(
@@ -27,7 +28,7 @@ st.title("Mapa Geológico do Projeto Arenópolis - TF 2023 UnB")
 
 # center on Liberty Bell, add marker
 m = folium.Map(location=[-16.39374927779391, -51.663956293293964], zoom_start=10)
-
+folium.GeoJson(unds).add_to(m)
 folium.Marker(
     [-16.39374927779391, -51.663956293293964], popup="Liberty Bell", tooltip="Liberty Bell"
 ).add_to(m)
