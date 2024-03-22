@@ -31,12 +31,22 @@ folium.Marker(
     [-16.39374927779391, -51.663956293293964], popup="Liberty Bell", tooltip="Liberty Bell"
 ).add_to(m)
 
-folium.GeoJson(unds,
-               style_function=lambda feature:{
-                   'stroke': False,
-                   'fillColor': "#ffff00"
-               }
-               ).add_to(m)
+colors = {
+    'D1f': '#ff0000',  # Cor para 'Valor1'
+    'JKλian': '#00ff00',  # Cor para 'Valor2'
+    'JKλiaga': '#0000ff',
+    'JKλiasv': 'D87B32',
+    'NP1apoa':'#0A5C1C',
+    # Adicione mais cores conforme necessário para outros valores de 'Sigla'
+}
+
+def color_by_sigla(feature):
+    sigla = feature['properties'].get('Sigla', '')  # Obtém o valor da propriedade 'Sigla', ou uma string vazia se não existir
+    return {
+        'stroke': False,
+        'fillColor': colors.get(sigla, '#ffffff'),  # Obtém a cor correspondente ao valor da 'Sigla' no mapeamento, ou branco (#ffffff) como padrão
+    }
+folium.GeoJson(unds, style_function=color_by_sigla).add_to(m)
 
 
 # call to render Folium map in Streamlit, but don't get any data back
