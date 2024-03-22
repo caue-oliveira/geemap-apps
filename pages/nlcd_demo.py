@@ -34,4 +34,4 @@ folium.TileLayer('openstreetmap').add_to(m)
 #folium.GeoJson(unds).add_to(m)
 
 # Exibe o mapa no Streamlit
-st_data = st_folium(m, width=725)
+st_data = st_folium(m, height=725)
