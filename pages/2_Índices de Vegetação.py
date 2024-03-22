@@ -187,7 +187,7 @@ Essa ferramenta ser√° valiosa pela sua simplicidade de manuseio, permitindo usu√
                         "NDWI",
                         "SAVI",
                                             ],
-                    index=9,
+                    index=4,
                 )
 
                 with st.expander("Customize options"):
