@@ -1,37 +1,39 @@
+# Libs import
 import streamlit as st
 import geemap.foliumap as geemap
 
+# Page configuration STARTS
 st.set_page_config(layout="wide")
 
 # Customize the sidebar
 markdown = """
 Web App URL: <https://geemap.streamlit.app>
 """
-
-st.sidebar.title("About")
+    # Side bar info
+st.sidebar.title("Contato")
 st.sidebar.info(markdown)
-logo = "https://i.imgur.com/UbOXYAU.png"
+logo = "/data/SGRS_LG.png"
 st.sidebar.image(logo)
 
 # Customize page title
-st.title("Earth Engine Web App")
+st.title("Portfólio de Cauê Oliveira")
 
 st.markdown(
     """
-    This multipage app template demonstrates various interactive web apps created using [streamlit](https://streamlit.io) and [geemap](https://geemap.org). It is an open-source project and you are very welcome to contribute to the [GitHub repository](https://github.com/giswqs/geemap-apps).
+    Olá, me chamo Cauê Oliveira. Sou geólogo formado pela Universidade de Brasília com uma paixão pelas geotecnologias.
+    Desenvolvi esta página para mostrar um pouco das minhas habilidades e projetos.
+    Aqui poderão ser encontrados projetos no Google Earth Engine, tanto no JavaScrpit quanto no Python API, painéis Power BI e mapas confeccionados por mim. 
     """
 )
 
-st.header("Instructions")
+st.header("Sobre")
 
 markdown = """
-1. For the [GitHub repository](https://github.com/giswqs/geemap-apps) or [use it as a template](https://github.com/new?template_name=geemap-apps&template_owner=giswqs) for your own project.
-2. Customize the sidebar by changing the sidebar text and logo in each Python files.
-3. Find your favorite emoji from https://emojipedia.org.
-4. Add a new app to the `pages/` directory with an emoji in the file name, e.g., `1_🚀_Chart.py`.
+Essa página foi desenvolvida utilizando o [streamlit](https://streamlit.io), a partir do projeto open-source do Professor Qiusheng Wu da Universidade do Tennessee ([GitHub repository](https://github.com/giswqs/geemap-apps)).
 """
 
 st.markdown(markdown)
+# Page configuration ENDS
 
 m = geemap.Map()
 m.add_basemap("HYBRID")
