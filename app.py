@@ -12,7 +12,7 @@ Web App URL: <https://geemap.streamlit.app>
     # Side bar info
 st.sidebar.title("Contato")
 st.sidebar.info(markdown)
-logo = "/data/SGRS_LG.png"
+logo = "data/SGRS_LG.png"
 st.sidebar.image(logo)
 
 # Customize page title
