@@ -107,14 +107,37 @@ legend_template = """
 {% macro html(this, kwargs) %}
 <div id='maplegend' class='maplegend' 
     style='position: absolute; z-index: 9999; background-color: rgba(255, 255, 255, 0.5);
-     border-radius: 6px; padding: 10px; font-size: 10.5px; right: 20px; top: 20px;'>     
+     border-radius: 6px; padding: 10px; font-size: 10px; right: 20px; top: 20px;'>     
 <div class='legend-scale'>
   <ul class='legend-labels'>
-    <li><span style='background: green; opacity: 0.75;'></span>Wind speed <= 55.21</li>
-    <li><span style='background: yellow; opacity: 0.75;'></span>55.65 <= Wind speed <= 64.29</li>
-    <li><span style='background: orange; opacity: 0.75;'></span>64.50 <= Wind speed <= 75.76</li>
-    <li><span style='background: red; opacity: 0.75;'></span>75.90 <= Wind speed <= 90.56</li>
-    <li><span style='background: purple; opacity: 0.75;'></span>Wind speed >= 91.07</li>
+    <li><span style='background: #D5EEB4; opacity: 0.75;'></span>Complexo Alcalino, Nefelinitos</li>
+    <li><span style='background: #F3F802; opacity: 0.75;'></span>Complexo Alcalino, Gabros Alcalinos</li>
+    <li><span style='background: #14E8C3; opacity: 0.75;'></span>Complexo Alcalino, Subvulcânicas</li>
+    <li><span style='background: #128BB3; opacity: 0.75;'></span>Complexo Alcalino, Ijolitos e melteigitos</li>
+    <li><span style='background: #128BB3; opacity: 0.75;'></span>Complexo Alcalino, Diques de basanito e fonolito</li>
+    <li><span style='background: #EFA10B; opacity: 0.75;'></span>Bacia do Paraná, Formação Furnas</li>
+    <li><span style='background: #F3B26B; opacity: 0.75;'></span>Bacia do Paraná, Formação Ponta Grossa</li>
+    <li><span style='background: #AF252C; opacity: 0.75;'></span>Granitóide</li>
+    <li><span style='background: #D80D8D; opacity: 0.75;'></span>Tonalito Indiferenciado</li>
+    <li><span style='background: #E41C50; opacity: 0.75;'></span>Granito Serra do Iran, Diorito</li>
+    <li><span style='background: #FEC0EF; opacity: 0.75;'></span>Granito Serra do Iran, Monzogranito</li>
+    <li><span style='background: #FEC0EF; opacity: 0.75;'></span>Granito Serra do Iran, Subvulcânica</li>
+    <li><span style='background: #FCFBDD; opacity: 0.75;'></span>Granito Serra do Iran, Sienogranito Fino</li>
+    <li><span style='background: #B60D12; opacity: 0.75;'></span>Granito Serra do Iran, Sienogranito Grosso</li>
+    <li><span style='background: #E41C50; opacity: 0.75;'></span>Granito Serra do Iran, Tonalito</li>
+    <li><span style='background: #BEA387; opacity: 0.75;'></span>Granito Serra do Iran, Granodiorito</li>
+    <li><span style='background: #FC555A; opacity: 0.75;'></span>Granito Rio Caiapó, Granito Equigranular Fino</li>
+    <li><span style='background: #D65355; opacity: 0.75;'></span>Granito Rio Caiapó, Granito Porfirítico Grosso</li>
+    <li><span style='background: #B9494D; opacity: 0.75;'></span>Granito Rio Caiapó, Diorito</li>
+    <li><span style='background: #A9C1C4; opacity: 0.75;'></span>Córrego do Horácio</li>
+    <li><span style='background: #F5CBB6; opacity: 0.75;'></span>Granito Serra do Tatu</li>
+    <li><span style='background: #E7A5AE; opacity: 0.75;'></span>Ribeirão Água Limpa, Granito fino</li>
+    <li><span style='background: #FC555A; opacity: 0.75;'></span>Ribeirão Água Limpa, Granito</li>
+    <li><span style='background: #FC555A; opacity: 0.75;'></span>Ribeirão Água Limpa, Granito Milonítico</li>
+    <li><span style='background: #623184; opacity: 0.75;'></span>Ribeirão Água Limpa, Hb Bt Tonalito</li>
+    <li><span style='background: #331549; opacity: 0.75;'></span>Gnaisse Arenópolis, Anfibolito</li>
+    <li><span style='background: #B282BF; opacity: 0.75;'></span>Gnaisse Arenópolis, Gnaisse Granítico</li>
+    <li><span style='background: #546087; opacity: 0.75;'></span>Gnaisse Arenópolis, Ultramáfica</li
   </ul>
 </div>
 </div> 
