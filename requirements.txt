@@ -6,4 +6,4 @@ ee
 folium
 streamlit-folium
 branca
-streamlit-pdf-viewer
+earthengine-api
