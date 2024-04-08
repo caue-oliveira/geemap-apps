@@ -15,5 +15,5 @@ matplotlib
 urllib3
 json5
 gdal
-pygdal==3.6.2.*
+pygdal
 
