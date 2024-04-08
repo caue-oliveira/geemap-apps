@@ -2,8 +2,6 @@
 import streamlit as st
 import folium
 from streamlit_folium import st_folium
-import warnings
-warnings.filterwarnings('ignore')
 import requests
 import pandas as pd
 import locale
