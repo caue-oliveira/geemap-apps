@@ -15,5 +15,4 @@ matplotlib
 urllib3
 json5
 gdal
-pygdal
 
