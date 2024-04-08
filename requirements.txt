@@ -7,8 +7,11 @@ folium
 streamlit-folium
 branca
 earthengine-api
-warnings
-requests
+streamlit
+numpy
 pandas
-locale
 plotly
+matplotlib
+urllib3
+json5
+gdal
