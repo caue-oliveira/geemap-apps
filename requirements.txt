@@ -7,3 +7,8 @@ folium
 streamlit-folium
 branca
 earthengine-api
+warnings
+requests
+pandas
+locale
+plotly
