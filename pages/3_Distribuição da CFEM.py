@@ -148,8 +148,9 @@ fig2.add_trace(go.Histogram(
     x=df_filt['SiglaEstado'],
     y=df_filt['Valor'],
     histfunc='sum',
+    name="CFEM %{x}",
     hovertemplate='Valor: R$ %{y:,.2f}',  # Exibir o valor no formato de moeda brasileira
-    texttemplate="{x}: R$ %{y:,.2f}"
+    texttemplate="R$ %{y:,.2f}"
 )).update_xaxes(categoryorder='total descending')
 
 # Atualizar layout do gráfico
