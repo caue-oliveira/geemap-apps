@@ -150,6 +150,7 @@ fig2.add_trace(go.Histogram(
     histfunc='sum',
     name=f'Distribuição CFEM por estado {year_selection} - {subs_selection} ',
     hovertemplate='Valor: R$ %{y:,.2f}',  # Exibir o valor no formato de moeda brasileira
+    texttemplate="%{x}"
 )).update_xaxes(categoryorder='total descending')
 
 # Atualizar layout do gráfico
@@ -159,9 +160,6 @@ fig2.update_layout(
     yaxis_title='Valor',
     showlegend=False,
     plot_bgcolor='white',
-    yaxis=dict(
-        tickformat='R$,.2f'  # Formatar ticks do eixo y como moeda brasileira
-    )
 )
 
 st.plotly_chart(fig2, use_container_width=True)
