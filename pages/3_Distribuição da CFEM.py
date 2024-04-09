@@ -159,6 +159,9 @@ fig2.update_layout(
     yaxis_title='Valor',
     showlegend=False,
     plot_bgcolor='white',
+    yaxis=dict(
+        tickformat='R$,.2f'  # Formatar ticks do eixo y como moeda brasileira
+    )
 )
 
 st.plotly_chart(fig2, use_container_width=True)
