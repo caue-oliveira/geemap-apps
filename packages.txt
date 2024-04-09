@@ -1,1 +1,3 @@
 libgdal-dev
+locales
+locales-all
