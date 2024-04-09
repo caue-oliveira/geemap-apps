@@ -8,7 +8,7 @@ import locale
 import plotly.graph_objects as go
 
 # Configurar a localidade para o formato de moeda brasileira
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+locale.setlocale(locale.LC_ALL, 'pt_BR')
 
 # Page Config STARTS
 st.set_page_config(layout="wide")
