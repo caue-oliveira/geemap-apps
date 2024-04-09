@@ -149,9 +149,7 @@ fig2.add_trace(go.Histogram(
     y=df_filt['Valor'],
     histfunc='sum',
     name=f'Distribuição CFEM por estado {year_selection} - {subs_selection} ',
-    text=valores_formatados,  # Usar os valores formatados no hover
-    hoverinfo='text+y',
-    hovertemplate='<b>%{x}</b><br>Total: %{text}',
+    hovertemplate='Valor: R$ %{y:,.2f}',  # Exibir o valor no formato de moeda brasileira
 )).update_xaxes(categoryorder='total descending')
 
 # Atualizar layout do gráfico
