@@ -138,8 +138,10 @@ st_folium(m, width=1000, returned_objects=[])  # Mapa ao streamlit
 
 fig2 = go.Figure()
 
-# Formatando os valores como moeda brasileira (R$)
+# Calcular o somatório por estado nos dados filtrados
 soma_por_estado = df_filt.groupby('SiglaEstado')['Valor'].sum()
+
+# Formatando os valores para real R$ 1.000,00
 valores_formatados = soma_por_estado.apply(lambda x: f'R$ {x:,.2f}')
 
 fig2.add_trace(go.Histogram(
@@ -147,6 +149,9 @@ fig2.add_trace(go.Histogram(
     y=df_filt['Valor'],
     histfunc='sum',
     name=f'Distribuição CFEM por estado {year_selection} - {subs_selection} ',
+    text=valores_formatados,  # Usar os valores formatados no hover
+    hoverinfo='text+y',
+    hovertemplate='<b>%{x}</b><br>Total: %{text}',
 )).update_xaxes(categoryorder='total descending')
 
 # Atualizar layout do gráfico
