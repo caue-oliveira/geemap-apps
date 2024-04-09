@@ -147,7 +147,6 @@ fig2.add_trace(go.Histogram(
     y=df_filt['Valor'],
     histfunc='sum',
     name=f'Distribuição CFEM por estado {year_selection} - {subs_selection} ',
-    text=valores_formatados,
 )).update_xaxes(categoryorder='total descending')
 
 # Atualizar layout do gráfico
