@@ -150,7 +150,7 @@ fig2.add_trace(go.Histogram(
     histfunc='sum',
     name="CFEM (%{x})",
     hovertemplate='Valor: R$ %{y:,.2f}',  # Exibir o valor no formato de moeda brasileira
-    texttemplate="R$ %{y:,.2f}"
+    texttemplate="R$ %{y:.,2f}"
 )).update_xaxes(categoryorder='total descending')
 
 # Atualizar layout do gráfico
