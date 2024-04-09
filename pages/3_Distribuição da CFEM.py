@@ -74,18 +74,17 @@ df_filt = df_filtro[
 # Map config STARTS
 m = folium.Map(location=[-16.39374927779391, -51.663956293293964], tiles='openstreetmap', zoom_start=4)
 
-
-
 # Importa o GeoJson do Brasil
 br = requests.get(
     "https://raw.githubusercontent.com/jonates/opendata/master/arquivos_geoespaciais/geojs-100-mun.json"
 ).json()
+
 # Deixar o nome dos municípios em maiúsculo
 for feature in br['features']:
     nome_ente = feature['properties']['description']
     feature['properties']['description'] = nome_ente.upper()
 
-# Adiciona informações ao GeoJSON
+# Adiciona as informações do df ao GeoJSON
 for feature in br['features']:
         nome_ente = feature['properties']['description']
 
@@ -141,7 +140,7 @@ fig2 = go.Figure()
 
 # Formatando os valores como moeda brasileira (R$)
 soma_por_estado = df_filt.groupby('SiglaEstado')['Valor'].sum()
-valores_formatados = [f'R$ {valor:,.2f}' for valor in soma_por_estado]
+valores_formatados = soma_por_estado.apply(lambda x: f'R$ {x:,.2f}')
 
 fig2.add_trace(go.Histogram(
     x=df_filt['SiglaEstado'],
@@ -149,8 +148,6 @@ fig2.add_trace(go.Histogram(
     histfunc='sum',
     name=f'Distribuição CFEM por estado {year_selection} - {subs_selection} ',
     text=valores_formatados,
-    hoverinfo='text+y',
-    hovertemplate='<b>%{x}</b><br>Total: %{text}',
 )).update_xaxes(categoryorder='total descending')
 
 # Atualizar layout do gráfico
