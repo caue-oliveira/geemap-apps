@@ -14,5 +14,4 @@ plotly
 matplotlib
 urllib3
 json5
-gdal==3.8.5
 
