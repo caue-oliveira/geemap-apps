@@ -14,4 +14,4 @@ plotly
 matplotlib
 urllib3
 json5
-
+pyarrow
