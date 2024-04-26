@@ -1,7 +1,7 @@
 # Libs
 import streamlit as st
 import folium
-from streamlit_folium import st_folium
+from streamlit_folium import folium_static
 import requests
 import pandas as pd
 import locale
@@ -131,7 +131,7 @@ folium.GeoJsonTooltip(['description', 'Valor'], aliases=['Município:', 'Valor d
 
 folium.plugins.Geocoder().add_to(m)
 folium.LayerControl().add_to(m)  # Add o controle de layers
-st_folium(m, width=1000, returned_objects=[])  # Mapa ao streamlit
+folium_static(m, width=1200, height=600) # Mapa ao streamlit
 
 # Gráficos START
     # Configurando o gráfico 2
